@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prd-analysis.schema.json",
+  "title": "Clarified PRD analysis",
+  "description": "Structured, build-ready output of the figma-product-prd PM quality gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["product", "targetPlatform", "audience", "actors", "flows", "screens", "successMetrics", "openQuestions"],
+  "properties": {
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "goal"],
+      "properties": {
+        "name": { "type": "string" },
+        "goal": { "type": "string", "description": "One-line product goal." },
+        "problem": { "type": "string" }
+      }
+    },
+    "targetPlatform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platforms", "confirmed"],
+      "description": "The platform(s) this product targets. First-class field — must be USER-CONFIRMED; 'confirmed:false' blocks Step 1 close.",
+      "properties": {
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "description": "One or more of the canonical platform values. 'responsive-web' means the product must satisfy both mobile and desktop conventions at their respective widths.",
+          "items": {
+            "enum": [
+              "mobile-native-ios",
+              "mobile-native-android",
+              "mobile-web",
+              "responsive-web",
+              "desktop-web",
+              "tablet"
+            ]
+          }
+        },
+        "confirmed": {
+          "type": "boolean",
+          "description": "Must be true before Step 1 can close. A PRD that does not state platform makes this [NEEDS INPUT], not [AUTO]."
+        },
+        "deviceFrameDefaults": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Default frame dimensions for each platform in this list. Drives the builder's canonical device width.",
+          "properties": {
+            "mobile": { "type": "string", "description": "e.g. '390×844' (iPhone 14 logical)" },
+            "tablet": { "type": "string", "description": "e.g. '820×1180' (iPad Air)" },
+            "desktop": { "type": "string", "description": "e.g. '1440 wide' (common breakpoint)" }
+          }
+        },
+        "safeAreaNeeded": {
+          "type": "boolean",
+          "description": "True for mobile-native-ios / mobile-native-android / mobile-web. Safe-area insets (notch, home indicator) must be respected in the layout."
+        }
+      }
+    },
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primaryPersona"],
+      "description": "Who this product is for and how they think — derived from the PRD (product + actors + REFERENCE docs), not invented. It is what Step 2 (Direction) grounds its art direction on. See references/audience-research.md.",
+      "properties": {
+        "primaryPersona": {
+          "type": "string",
+          "description": "1–2 primary personas (role + who they actually are). Not a gallery."
+        },
+        "ageContext": {
+          "type": "string",
+          "description": "Age band / locale / tech-savviness and the usage context (device, setting, session length, stress level) — only what changes a design decision."
+        },
+        "mentalModel": {
+          "type": "string",
+          "description": "The metaphors/expectations the user already holds (which apps have trained them; what they expect a 'transfer'/'dashboard'/'feed' to feel like)."
+        },
+        "accessibilityNeeds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Contrast/text-size sensitivity, reduced-motion, one-handed reach, color-blind-safe status signaling — any the audience plausibly needs."
+        },
+        "jobsToBeDone": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Top 3 outcomes the user is hiring this product for, phrased as outcomes not features."
+        }
+      }
+    },
+    "actors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "role"],
+        "properties": {
+          "id": { "type": "string" },
+          "role": { "type": "string" },
+          "permissions": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "steps"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "actor": { "type": "string", "description": "actor id" },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["screen"],
+              "properties": {
+                "screen": { "type": "string", "description": "screen id this step lands on" },
+                "action": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "screens": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "purpose", "register", "states"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "name": { "type": "string" },
+          "purpose": { "type": "string", "description": "One line: what this screen is FOR — its job/intent. Defended in the exit-review; it is what Step 2 Direction grounds the screen's treatment on." },
+          "register": {
+            "enum": ["energy", "trust", "neutral"],
+            "description": "INITIAL register tag (the creativity dial). This is the source of truth ONLY for the initial pass — Step 2 concept.md's 'Register map' FINALIZES it, and Steps 3–5 only reference the finalized value, never re-decide it. energy = expressive/competitive/hero; trust = transactional/calm/legibility-first; neutral = utility/scanning."
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["field", "source"],
+              "properties": {
+                "field": { "type": "string" },
+                "source": { "enum": ["static", "user-input", "data", "computed"] },
+                "notes": { "type": "string" }
+              }
+            }
+          },
+          "states": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "enum": ["default", "empty", "loading", "error", "success", "disabled", "permission-denied"] }
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["label", "effect"],
+              "properties": {
+                "label": { "type": "string" },
+                "effect": { "type": "string", "description": "what it does / where it goes" }
+              }
+            }
+          },
+          "rules": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "successMetrics": {
+      "type": "array",
+      "description": "What the PRD says success looks like — the outcomes the design must make achievable (e.g. 'user knows their balance is safe in 2s', a stated conversion/completion target). Derived from the PRD; if the PRD is silent, surface it as an openQuestion rather than inventing a metric. Required field, but an empty array is valid when the user confirms there is no formal success target.",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "array",
+      "description": "Hard constraints the PRD imposes — platform/compliance/performance/legal/brand. Distinct from successMetrics (those are goals; these are non-negotiable limits the build must respect).",
+      "items": { "type": "string" }
+    },
+    "openQuestions": {
+      "type": "array",
+      "description": "Every functional gap surfaced. Step 1 closes only when none are unresolved.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "question", "severity", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "screen": { "type": "string", "description": "screen id, or null for cross-cutting" },
+          "question": { "type": "string" },
+          "severity": { "enum": ["AUTO", "ASSUMED", "NEEDS_INPUT"] },
+          "status": { "enum": ["open", "confirmed"] },
+          "resolution": { "type": "string", "description": "the user's answer or the recorded inference" }
+        }
+      }
+    }
+  }
+}

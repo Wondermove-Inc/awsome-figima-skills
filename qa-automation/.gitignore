@@ -1,0 +1,39 @@
+# ── Secrets & credentials (NEVER commit) ──
+.env
+.env.*
+auth/
+
+# ── Runtime / generated data ──
+dom_cache/
+test_results/
+reports/
+watch/
+tc_list.json
+results_final.json
+
+# ── design-qa snapshots (may capture authenticated PII — never commit) ──
+.tmp/
+design_qa_snapshots/
+*.snap.json
+
+# ── Python / venv / caches ──
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# ── OS / editor / tool caches ──
+.DS_Store
+.figma-mcp-cache/
+
+# ── Team-shared Claude config ──
+# Override ~/.gitignore_global which excludes .claude/. This project intentionally
+# team-shares its .claude/ (the /design-qa skill + design-qa-reviewer agent), matching
+# the sibling figma-automation submodule.
+!.claude/
+!.claude/**
+# …but keep machine-local / generated files out:
+.claude/**/__pycache__/
+.claude/**/*.pyc
+.claude/**/.pytest_cache/
+.claude/settings.local.json

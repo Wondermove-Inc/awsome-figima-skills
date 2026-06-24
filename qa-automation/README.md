@@ -1,0 +1,58 @@
+# QA Automation Plugin Pack
+
+Design-fidelity QA skills and agents for comparing a live rendered application
+against its Figma design.
+
+This public distribution contains only the reusable plugin package. Project
+manifests, screenshots, browser snapshots, reports, and client knowledge bases
+belong in private project repositories.
+
+## Contents
+
+```text
+plugin/
+  .claude-plugin/      Claude Code plugin manifest
+  .codex-plugin/       Codex plugin manifest
+  agents/              Design QA reviewer agent
+  codex-agents/        Codex agent TOML wrapper
+  skills/design-qa/    Design-fidelity QA skill and snapshot scripts
+```
+
+## Requirements
+
+- Python 3
+- Playwright with Chromium installed
+- A running local application to inspect
+- Figma design coordinates for the target screens
+
+Install the browser dependency in your active Python environment:
+
+```bash
+pip install playwright
+playwright install chromium
+```
+
+## Codex Setup
+
+From the repository root:
+
+```bash
+./scripts/stage-codex.sh
+```
+
+Restart Codex after staging.
+
+## Claude Code Setup
+
+From the repository root:
+
+```bash
+claude plugin marketplace add ./qa-automation/plugin
+```
+
+Restart Claude Code after installing or updating the plugin.
+
+## Artifact Safety
+
+Design QA snapshots can contain authenticated UI data. Write them to ignored
+temporary folders, keep them out of git, and delete them after review.

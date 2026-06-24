@@ -1,0 +1,54 @@
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets and local config
+.env
+.env.*
+*.pem
+*.key
+*.token
+.mcpregistry_github_token
+.mcpregistry_registry_token
+
+# Node and plugin builds
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+figma-mcp-express/plugin/dist/
+figma-mcp-express/npm/node_modules/
+
+# Go builds and coverage
+/bin/
+figma-mcp-express/bin/
+*.test
+coverage.out
+coverage.html
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.pytest_cache/
+
+# Runtime caches and generated reports
+.figma-mcp-cache/
+.tmp/
+.tmp-*/
+.tmp-review/
+reports/
+test_results/
+design_qa_snapshots/
+*.snap.json
+
+# Project-specific design data should not be published from this repo.
+design-system/
+figma-automation/design-system/
+qa-automation/design-qa/
+qa-automation/knowledge/

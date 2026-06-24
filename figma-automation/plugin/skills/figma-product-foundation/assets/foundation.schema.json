@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "foundation.schema.json",
+  "title": "Design foundation rollup",
+  "description": "Machine-readable summary of the figma-product-foundation dossier, consumed by figma-product-spec and figma-product-build.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["targetPlatform", "conceptRef", "designLanguage", "signatureLayer", "libraryMapping", "sources"],
+  "properties": {
+    "targetPlatform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platforms", "deviceFrameDefaults"],
+      "description": "Echoed from prd-analysis.json. The confirmed platform(s) for this product. Consumed by figma-product-build to set canonical device width and enforce platform-appropriate UX patterns.",
+      "properties": {
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "mobile-native-ios",
+              "mobile-native-android",
+              "mobile-web",
+              "responsive-web",
+              "desktop-web",
+              "tablet"
+            ]
+          }
+        },
+        "deviceFrameDefaults": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mobile": { "type": "string" },
+            "tablet": { "type": "string" },
+            "desktop": { "type": "string" }
+          }
+        },
+        "safeAreaNeeded": { "type": "boolean" }
+      }
+    },
+    "conceptRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "directionStatement"],
+      "description": "Pointer to the signed-off art direction (Step 2) this dossier systematizes.",
+      "properties": {
+        "path": { "type": "string", "description": "path to concept.md, e.g. design-system/<slug>/direction/concept.md" },
+        "directionStatement": { "type": "string", "description": "the concept's one-line direction statement" }
+      }
+    },
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional echo of the audience derived in the Research step (prd-analysis.json); not required here.",
+      "required": ["primaryPersona", "mentalModel", "jobsToBeDone"],
+      "properties": {
+        "primaryPersona": { "type": "string" },
+        "demographics": { "type": "string" },
+        "context": { "type": "string" },
+        "mentalModel": { "type": "string" },
+        "accessibility": { "type": "array", "items": { "type": "string" } },
+        "jobsToBeDone": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+    "designLanguage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["color", "typography", "density", "shape", "motion", "voice"],
+      "properties": {
+        "color": { "type": "string", "description": "philosophy + temperature + light/dark stance" },
+        "typography": { "type": "string" },
+        "density": { "type": "string", "description": "spacing/density rhythm" },
+        "shape": { "type": "string", "description": "radius/shape language" },
+        "iconography": { "type": "string" },
+        "elevation": { "type": "string" },
+        "motion": { "type": "string", "description": "transition + easing feel + microinteractions" },
+        "haptics": { "type": "string" },
+        "voice": { "type": "string", "description": "brand voice + tone summary (grounds COPY.md)" }
+      }
+    },
+    "signatureLayer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["motif", "semanticMotion"],
+      "description": "The bespoke layer the concept calls for; how each is built/sourced and bound (use 'n/a — <why>' if the concept has none).",
+      "properties": {
+        "motif": { "type": "string", "description": "the signature device + how it's constructed/bound in the library, or n/a" },
+        "semanticMotion": { "type": "string", "description": "the signature motion token: what it does + what it MEANS, or n/a" },
+        "illustration": { "type": "string", "description": "illustration language + sourcing, if any" },
+        "feasibility": { "type": "string", "description": "what the library can/can't express for this layer" }
+      }
+    },
+    "libraryMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindings"],
+      "properties": {
+        "bindings": {
+          "type": "array",
+          "description": "foundation decision → concrete library token/component/variant",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["decision", "bind"],
+            "properties": {
+              "decision": { "type": "string", "description": "e.g. primary accent, body type, card density" },
+              "bind": { "type": "string", "description": "library token role / component key or name / variant to favor" }
+            }
+          }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "description": "foundation decisions the library cannot express; flagged and resolved with the user",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["decision", "options", "status"],
+        "properties": {
+          "decision": { "type": "string" },
+          "options": { "type": "array", "items": { "type": "string" } },
+          "resolution": { "type": "string" },
+          "status": { "enum": ["open", "resolved"] }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "description": "evidence backing the design-language decisions",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "claim"],
+        "properties": {
+          "url": { "type": "string" },
+          "claim": { "type": "string", "description": "the specific pattern taken from this source" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "copy-md.schema.json",
+  "title": "COPY.md frontmatter",
+  "description": "Schema for the YAML frontmatter of COPY.md: the voice/tone system + the per-screen string map. Screen-coverage is checked separately by scripts/check_copy.py against the confirmed screen list.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["voice", "tone", "screens"],
+  "properties": {
+    "voice": { "type": "string", "minLength": 1 },
+    "tone": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string" },
+      "description": "context -> how the voice flexes (success, error, empty, destructive, ...)"
+    },
+    "terminology": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "prefer": { "type": "array", "items": { "type": "string" } },
+        "avoid": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "patterns": { "type": "object", "additionalProperties": true },
+    "screens": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "screenId -> region/string tree. Each screen entry must be a non-empty object.",
+      "additionalProperties": {
+        "type": "object",
+        "minProperties": 1
+      }
+    }
+  }
+}

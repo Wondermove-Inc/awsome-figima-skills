@@ -1,0 +1,9 @@
+{
+  "name": "figma-automation",
+  "displayName": "Figma Automation",
+  "version": "0.1.0",
+  "description": "Figma enterprise design-automation workflow: one-screen redesign, greenfield PRD→product pipeline, and progressive memory, with the builder/reviewer/verifier agents.",
+  "author": { "name": "Wondermove Inc." },
+  "license": "MIT",
+  "skills": "./skills/"
+}

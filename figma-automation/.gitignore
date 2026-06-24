@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Secrets — Figma PAT and any local env. NEVER commit.
+.env
+.env.local
+
+# figma-mcp-go server-side spill cache (gateResponseText writes large tool
+# responses here, under the server's cwd = project root). Regenerable; do not commit.
+.figma-mcp-cache/
+
+# Override ~/.gitignore_global which excludes .claude/.
+# This project intentionally team-shares its .claude/ configuration so the
+# figma workflow (skills, agents, hooks, JUDGMENT.md, DESIGN.md, memory)
+# moves with the repo.
+!.claude/
+!.claude/**
+
+# Re-exclude per-session noise that should NOT be checked in.
+# (the `!.claude/**` override above re-includes these — re-ignore them explicitly)
+.claude/**/__pycache__/
+.claude/**/*.pyc
+.claude/**/.pytest_cache/
+.claude/figma-dream-log.json
+.claude/figma-files.json.lock
+.claude/figma-projects.json.lock
+.claude/settings.local.json
+
+# Visual-companion session directory (figma-brainstorm /brainstorming overlay).
+# Mockup HTML files persist here when --project-dir is passed; should not be
+# checked in.
+.superpowers/
+
+# Library cache screenshots — regenerable via /figma refresh-cache --library.
+# Large binaries; checked-in MD + JSON manifests already capture the metadata.
+.claude/projects/*/knowledge/library/screenshots/
+.claude/projects/*/knowledge/reference/screenshots/
+
+# Known-non-matches state (Phase 4.6 sweep memory) — per-project staging, not portable.
+.claude/projects/*/knowledge/library/known-non-matches.json
+
+# Self-contained project codebases (design-system/<slug>/, owned by the figma-project skill).
+# Commit the diffable per-entity JSON; ignore binaries, the rebuildable library build-cache,
+# and session-ephemeral state/log. See figma-project/references/sot-layout.md → git policy.
+design-system/**/library/screenshots/
+design-system/**/pages/**/screenshots/
+design-system/**/research/**/screenshots/
+design-system/_build-cache/
+design-system/**/governance/state.json
+design-system/**/governance/build-log.json
+design-system/**/governance/build-log.archive.json
+design-system/**/library/known-non-matches.json
+design-system/**/reports/out/assets/
+design-system/**/reports/report-queue.json
+
+# Claude Code agent runtime state — session-ephemeral, not portable.
+.agents/
+
+# Streaming scratch format from figma-mcp-go catalog fetches — regenerable.
+design-system/**/*.ndjson
+
+# Temp work directories — session artifacts, not source
+.tmp-review/
+.tmp-screenshots/
+.tmp-visual-researcher-smoke/
+_build-cache/

@@ -1,0 +1,13 @@
+{
+  "name": "figma-automation",
+  "owner": {
+    "name": "sunhome243"
+  },
+  "plugins": [
+    {
+      "name": "figma-automation",
+      "source": ".",
+      "description": "Figma enterprise design-automation workflow: redesign, greenfield product pipeline (PRD → direction → foundation → spec → build), and progressive memory — plus the builder/reviewer/verifier agents."
+    }
+  ]
+}

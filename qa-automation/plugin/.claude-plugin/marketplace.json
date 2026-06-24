@@ -1,0 +1,13 @@
+{
+  "name": "qa-automation",
+  "owner": {
+    "name": "sunhome243"
+  },
+  "plugins": [
+    {
+      "name": "qa-automation",
+      "source": ".",
+      "description": "Design-QA implementation-fidelity review: verify a live rendered app matches its Figma design (3-layer comparison, adversarial reviewer gate), with the bundled Playwright snapshot script."
+    }
+  ]
+}

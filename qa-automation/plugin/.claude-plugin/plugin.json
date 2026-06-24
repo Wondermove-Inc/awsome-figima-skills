@@ -1,0 +1,12 @@
+{
+  "name": "qa-automation",
+  "displayName": "QA Automation",
+  "version": "0.1.0",
+  "description": "Design-QA implementation-fidelity review: verify a live rendered app matches its Figma design, with the adversarial design-qa-reviewer agent and a bundled Playwright snapshot script.",
+  "author": { "name": "Wondermove Inc." },
+  "license": "MIT",
+  "skills": "./skills/",
+  "agents": [
+    "./agents/design-qa-reviewer.md"
+  ]
+}

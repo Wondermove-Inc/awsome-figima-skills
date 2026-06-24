@@ -10,6 +10,16 @@ builder *execute craft*, not merely bind variables.
 The guiding idea: **AI-assisted design is fine — _generic_ is the enemy.** The fix is not "more
 effects." It is the *right* effects for the surface's emotional register, applied with intent.
 
+## Contents
+
+- Slop failure modes
+- Copy restraint
+- Register-based craft toolkit
+- Universal anti-flat moves
+- Reference sourcing and transfer
+- Cheap validation before Figma
+- Direction handoff
+
 ## Slop has TWO opposite failure modes — check for both
 
 "Looks AI-generated" comes from *either* too little craft *or* too much decoration. They are

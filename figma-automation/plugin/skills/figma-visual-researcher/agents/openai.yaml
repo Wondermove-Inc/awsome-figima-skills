@@ -1,4 +1,4 @@
 interface:
   display_name: "Figma Visual Researcher"
   short_description: "Finds UI refs and media assets."
-  default_prompt: "Create a validated reference_pack or asset_pack for a Figma product build."
+  default_prompt: "Use $figma-visual-researcher to create a validated reference_pack or asset_pack for a Figma product build."

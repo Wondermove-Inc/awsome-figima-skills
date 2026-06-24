@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design QA"
+  short_description: "Reviews app fidelity against Figma."
+  default_prompt: "Use $design-qa to compare a live app screen against its Figma design and report drift."

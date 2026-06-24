@@ -5,6 +5,14 @@ produces) so it lints cleanly and is portable. Read that skill's `design-md-sche
 authoritative token/section rules; this file covers the two things specific to greenfield authoring:
 **library-faithful tokens** and the **`## Screens` layout-intent section**.
 
+## Contents
+
+- Token frontmatter
+- Prose sections
+- `## Screens` layout intent and art direction
+- Library gaps
+- Output check
+
 ## Token frontmatter — from the library, not from taste
 
 The YAML frontmatter (`colors`, `typography`, `spacing`, `rounded`, `components`) must mirror the

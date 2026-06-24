@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Product"
+  short_description: "Orchestrates PRD-to-Figma product builds."
+  default_prompt: "Use $figma-product to turn a PRD or product brief into high-fidelity Figma screens."

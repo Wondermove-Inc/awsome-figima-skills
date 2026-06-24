@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Product Direction"
+  short_description: "Creates product art direction."
+  default_prompt: "Use $figma-product-direction to define the visual direction for a PRD-to-Figma product build."

@@ -1,5 +1,15 @@
 # Review Protocol — L3 Gate (two parallel verifiers, run RARELY, ONCE per screen)
 
+## Contents
+
+- Cold start
+- Verifier method
+- Review dimensions
+- Delta-review mode
+- Finding quality bar
+- JSON output
+- Hard rules
+
 L3 is split into **two independent verifiers that run in parallel** (background, READ-ONLY) on a screen
 already past L2 (the mechanical pre-gate, `completeness-floor.md`). Neither issues PASS alone — the
 orchestrator merges them: **`PASS = structuralVerdict ∧ craftVerdict`**, with the combined findings sent
@@ -19,8 +29,6 @@ rest, in parallel; do not re-derive its layer.
 > should usually PASS. When a verifier finds a defect its sibling layer should have caught (a raw value at
 > the craft verifier, a craft miss the structural scans flagged), note it as an `l2GateMiss` so the
 > upstream floor tightens — every round saved is the point.
-
----
 
 ## Step 0 — cold start
 

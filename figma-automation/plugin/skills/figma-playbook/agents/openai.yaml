@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Playbook"
+  short_description: "Manages Figma workflow memory stores."
+  default_prompt: "Use $figma-playbook to read or update Figma workflow memory through the apply script."

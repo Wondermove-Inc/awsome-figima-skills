@@ -14,6 +14,14 @@ and the structural verifier is its independent backstop.
 > as your own early-warning, return `r1Report` as **advisory**, answer the Phase 1.5 challenge truthfully,
 > and let the L3 verifiers be the gate. Do NOT mark yourself complete and stop.
 
+## Contents
+
+- Ground truth
+- Six mechanical checks
+- Squint hierarchy check
+- Runnable recipe
+- What R1 does not catch
+
 ## Ground truth: the original inventory
 
 Every check below is driven by **`<sot>/rebuild/<screenId>-inventory.json`** — a node-walk of the

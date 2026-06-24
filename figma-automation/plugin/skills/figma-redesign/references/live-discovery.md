@@ -8,6 +8,14 @@ already solved — check there first, then discover only what's missing.
 
 ---
 
+## Contents
+
+- Run-start catalog fetch
+- Per-element search and bounded reads
+- Look-alike trap
+- Deliberation guard
+- Library import gotchas
+
 ## Run-start: one catalog fetch (REST, scratch)
 
 At run start (orchestrator pre-flight OR builder STEP 0):

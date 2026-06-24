@@ -6,6 +6,16 @@ This reference captures the method lessons behind the `design-qa` workflow. The
 original spike compared one rendered application screen with its Figma frame and
 then repeated the comparison with injected visual drift.
 
+## Contents
+
+- Main conclusion
+- What worked
+- What did not work
+- Required correspondence step
+- Layout rule
+- Operational findings
+- Recommended pipeline
+
 ## Main Conclusion
 
 The workflow is useful, but a naive full-tree structural diff is not.

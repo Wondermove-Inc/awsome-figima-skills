@@ -14,6 +14,11 @@ their respective breakpoints.
 
 ---
 
+## Contents
+
+- UX patterns by platform
+- Microcopy conventions by platform
+
 ## Part 1 — UX patterns by platform
 
 | Concern | `mobile-native-ios` / `mobile-native-android` / `mobile-web` | `desktop-web` | `tablet` | `responsive-web` |

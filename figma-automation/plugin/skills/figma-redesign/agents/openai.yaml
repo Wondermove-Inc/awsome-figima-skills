@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Redesign"
+  short_description: "Redesigns one screen into a target library."
+  default_prompt: "Use $figma-redesign to migrate one existing Figma screen into a target design-system library."

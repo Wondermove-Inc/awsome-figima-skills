@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Workflow"
+  short_description: "Routes Figma redesign and product builds."
+  default_prompt: "Use $figma to choose the right Figma redesign or PRD-to-product workflow."

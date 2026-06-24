@@ -1,5 +1,15 @@
 # Original Inventory — Ground Truth for Every Screen
 
+## Contents
+
+- What this is
+- Invariants
+- Inventory JSON schema
+- Walk procedure
+- Inventory-diff self-review
+- Look-alike trap
+- Memory proposals
+
 ## What this is
 
 The `<sot>/rebuild/<screenId>-inventory.json` file is the **single source of truth** for completeness. Every completeness check — from the builder's self-review to the Opus gate — reduces to one question per element: **did this inventory entry survive into the built screen, rendered and visible?**

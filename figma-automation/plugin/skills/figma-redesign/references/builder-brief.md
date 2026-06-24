@@ -10,6 +10,19 @@ The original frame is your **content source + visual reference**; the target lib
 
 ---
 
+## Contents
+
+- Cold start
+- Original inventory
+- Catalog fetch and live discovery
+- Section-by-section build loop
+- Batch-first binding
+- Asset survival
+- Self-review and L2 floor
+- Return JSON
+- Hard rules
+- Concurrency and import-thread discipline
+
 ## STEP 0 — cold start: load skills + memory
 
 1. `Skill('figma-go')` — discrete-tool mechanics + bounded reads + the `batch` interpreter.

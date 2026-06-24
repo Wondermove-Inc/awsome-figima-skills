@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Product PRD"
+  short_description: "Prepares PRDs for Figma product design."
+  default_prompt: "Use $figma-product-prd to parse a PRD into screens, flows, states, gaps, and audience context."

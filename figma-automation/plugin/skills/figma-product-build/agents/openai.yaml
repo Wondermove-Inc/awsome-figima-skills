@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Product Build"
+  short_description: "Builds approved specs into Figma screens."
+  default_prompt: "Use $figma-product-build to render approved DESIGN.md and COPY.md into Figma screens."

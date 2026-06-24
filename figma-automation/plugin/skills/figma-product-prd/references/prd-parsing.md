@@ -1,5 +1,14 @@
 # PRD parsing — extraction method, interrogation checklist, tagging
 
+## Contents
+
+- Read and classify
+- Extract structure to `prd-analysis.json`
+- Completeness interrogation checklist
+- Tagging and severity
+- Resolve with the user
+- Hand off
+
 ## 1. Read and classify
 
 If the PRD is a folder, classify each file so you weight core requirements over reference material:

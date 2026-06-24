@@ -432,90 +432,11 @@ misses harden the next.
 
 ## Visual research escalation
 
-**Common-pattern screen gate (H5).** A screen whose layout is a well-known pattern — receipt/price-
-summary, empty state, list row, confirmation, payment — is **not dispatched** until a reference exists:
-a cache hit in `design-system/_build-cache/ref-library/<pattern>/` or a fresh researcher run, AND the
-curated ref is staged on `🔖 References` with its analysis as an adjacent caption. A ref without
-analysis is half a ref. The gate blocks dispatch like L2 blocks L3 — not advisory. Front-load: enumerate
-all common patterns at spec/foundation time, fetch in one batched run, reuse across the build.
-
-**Cost discipline (visual-researcher is token-heavy — image tokens + browsing dominate).** Before any
-dispatch, in this order:
-1. **Cache-first / reuse.** Common patterns (receipt, empty/error state, list row, form, payment-summary,
-   confirmation) recur across screens AND projects. Keep a persistent **reference library**
-   (`design-system/_build-cache/ref-library/<pattern>/` + the cross-project KB) with each ref's image +
-   analysis; **check it and REUSE before researching** — only fetch what's genuinely missing or stale.
-   A common pattern should be fetched ONCE, ever.
-2. **Front-load in ONE batched pass, not per-screen ad-hoc.** At foundation/spec, enumerate every common
-   pattern the product will render and fetch them in a single visual-researcher run (multiple
-   requestIds) — far cheaper than N separate spin-ups discovered mid-build, and it avoids late re-runs.
-3. **Bound the request:** ~3 candidates (not 6), 2–3 named exemplar screens (not a wide sweep), and tell
-   the researcher to **save ONLY the curated candidates** (not every search hit — a prior run dumped ~40
-   raw grabs) and to **triage on thumbnails, full-res only the picks**.
-4. **Get it right once** — a sharp, on-target request (screen-type anchor + exemplars + negative set,
-   above) avoids the off-target re-run that doubles the cost.
-5. **Access-walled target → ask the USER for a screenshot; do NOT keep re-researching.** Many on-target
-   screens (mobile checkout/payment, logged-in flows, Medium/login-gated case studies) are unreachable
-   by public WebFetch — the researcher will burn tokens and return little. The moment a target is
-   confirmed paywalled/login-gated, STOP and ask the user to drop a screenshot (they can open the
-   logged-in app) — near-zero cost and perfectly on-target. Re-running the researcher against a wall is
-   the worst token spend.
-6. **Verify provenance.** A researcher run once returned fabricated/unverifiable `sourceYear`s — require
-   each kept ref to have a verifiable source + date (the stricter re-run correctly rejected the fakes).
-
-Builders do not browse. If a screen needs a better UI reference, logo, icon, photo, avatar, or Lottie
-that is not already in the brief, the builder returns:
-
-```json
-{
-  "blocked": true,
-  "reason": "visual_research_required",
-  "referenceRequests": [],
-  "assetRequests": []
-}
-```
-
-The orchestrator dispatches `visual-researcher`, validates the returned pack, adds the local paths to the
-builder brief, and resumes the SAME builder. If the runtime supports nested subagent calls, the builder
-may call `visual-researcher` directly, but the returned JSON contract is identical.
-
-Before dispatching, validate the builder's request with
-`figma-visual-researcher/scripts/validate-visual-request.py`. If it fails, return it to the same builder
-to add missing size/type/source/style/detail fields. Do not browse from the orchestrator with a vague
-request.
-
-Every request item must include a detailed natural-language `brief`. The brief should say what the
-builder wants in design language, not just a keyword: usage context, target screen, aesthetic,
-dimensionality (`flat`, `3D`, `4D/motion-like`, `isometric`, etc.), quality bar, source constraints,
-and what to avoid. It must also include structured prompt fields so the request is actionable:
-`targetScreen`, `usage`, `placement`, `targetSize`, `sourcePreference`, `candidateCount`,
-`styleKeywords`, `desiredQualities`, `mustHave`, and `avoid`. Reference requests also need
-`referenceKind`, `screens`, `minSourceYear: 2024`, and `trendFocus`; asset requests also need `type`,
-`assetKind`, `query`, and `preferredFormat` or `outputFormats`. The orchestrator should reject vague request items before
-dispatching `visual-researcher`, ideally by running:
-
-`<figma-visual-researcher-skill-dir>` means the installed `figma-visual-researcher` skill directory
-shown in Codex's available-skills list.
-
-```bash
-python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>
-```
-
-`visual-researcher` returns multiple candidates per `requestId`, not a single final answer. Pass all
-candidates back to the same builder. The builder chooses the candidate that best fits the actual screen
-layout and records the chosen candidate id in its ledger/self-review.
-
-**Anchor the request on the SCREEN-TYPE, not a sub-mechanic — and curate the results.** A request that
-leads with a *detail* ("show the discount as a won amount") pulls screens that merely contain that detail
-(product-listing discount badges, promo banners, balance dashboards, post-pay confirmation receipts)
-instead of the surface you actually want (the mobile **checkout/payment screen's price-summary region**).
-So: (1) state the **surface/screen-type** as the target ("the 결제/checkout screen where line items sum to
-a total above the Pay button"); (2) name **exemplar real screens** (the actual 결제 screen of 무신사/배민/
-쿠팡/Stripe/Apple Pay), not just pattern keywords; (3) give an **explicit negative set** (what NOT to pull —
-listings, promo banners, dashboards, confirmation-only); (4) the detail (discount-in-won) is a *nice-to-have*,
-not the search anchor. Then the orchestrator **curates the returned candidates for on-target relevance and
-stages only the on-target ones** — don't import all candidates blindly (a 2026-06-19 run staged off-target
-discount/dashboard screens because the request over-emphasized the discount mechanic and results weren't filtered).
+Read `references/visual-research-escalation.md` when a screen needs external UI references, logos,
+icons, photos, avatars, Lottie assets, or a common-pattern reference before dispatch. Keep the
+orchestrator cache-first, validate builder requests with
+`figma-visual-researcher/scripts/validate-visual-request.py`, and resume the same builder with the
+validated pack.
 
 ## Concurrency (R5 — the load-bearing constraint)
 Async = **partition screens across channels, ONE heavy-write builder per channel at a time**.
@@ -547,3 +468,4 @@ Don't treat "it already passed" as a permanent certificate.
 | File | Role |
 |---|---|
 | `references/spec-build-review.md` | Per-screen protocol: build brief from spec, L1 self-eval checklist, L2 mechanical checks, L3 adapted-D1 reviewer prompt, async/R5, recovery |
+| `references/visual-research-escalation.md` | Conditional visual-reference and asset escalation: common-pattern gate, cost discipline, request schema, validation, and result curation |

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Product Spec"
+  short_description: "Writes build-ready design and copy specs."
+  default_prompt: "Use $figma-product-spec to author DESIGN.md and COPY.md from an approved product foundation."

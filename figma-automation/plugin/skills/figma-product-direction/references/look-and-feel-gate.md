@@ -9,6 +9,14 @@ faster to tune. The method is simple: build it cheap, look at the rendered pixel
 > Same principle the craft layer already states: *iterate the look in HTML, get a read, THEN port the
 > locked treatment into Figma with real instances + bound tokens* (`craft-elevation.md`).
 
+## Contents
+
+- What to build
+- Headless render
+- Self-critique loop
+- Gate A handoff
+- Cleanup
+
 ## What to build
 
 - **One representative screen per register zone** — at minimum one **energy** surface and one

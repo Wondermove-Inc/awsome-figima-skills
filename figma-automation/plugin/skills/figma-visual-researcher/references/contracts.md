@@ -3,6 +3,14 @@
 This file is the stable handoff contract between orchestrators, builders, and the `visual-researcher`
 agent.
 
+## Contents
+
+- Modes
+- Builder behavior
+- Reference object
+- Asset object
+- Acceptance rules
+
 ## Modes
 
 `reference_pack` finds visual UX evidence. It saves images to `<sot>/foundation/refs/` and returns

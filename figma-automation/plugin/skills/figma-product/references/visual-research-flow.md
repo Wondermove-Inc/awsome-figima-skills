@@ -36,10 +36,13 @@ browsing.
 
 ## Request Rules
 
+`<figma-visual-researcher-skill-dir>` means the installed `figma-visual-researcher` skill directory
+shown in Codex's available-skills list.
+
 - Validate every builder/orchestrator request:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher/scripts/validate-visual-request.py <request.json>
+python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>
 ```
 
 - Reference requests require `minSourceYear: 2024` and `trendFocus`.
@@ -53,7 +56,7 @@ python3 ${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-r
 - Validate every returned pack:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher/scripts/validate-visual-pack.py <pack.json>
+python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-pack.py <pack.json>
 ```
 
 - Pass packs to builders as:

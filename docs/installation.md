@@ -14,15 +14,19 @@ Then import the Figma Desktop plugin from
 Keep the Figma plugin open while an agent is working. Most tools need a live
 Desktop plugin connection to read or edit the current Figma file.
 
-## Codex Skills
+## Codex Plugins
 
-Mirror the local plugin skills and agents into Codex's scan directories:
+Add this repository as a Codex marketplace, then install the plugins:
 
 ```bash
-./scripts/stage-codex.sh
+codex plugin marketplace add <REPO>
+codex plugin add figma-mcp-express@awesome-figma-skills
+codex plugin add figma-automation@awesome-figma-skills
+codex plugin add qa-automation@awesome-figma-skills
 ```
 
-Restart Codex after staging.
+Replace `<REPO>` with the absolute path to this checkout. Start a new Codex
+thread after installation so the bundled skills appear in the prompt.
 
 ## Claude Code Plugins
 

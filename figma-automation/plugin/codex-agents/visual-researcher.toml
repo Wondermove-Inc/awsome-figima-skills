@@ -23,8 +23,11 @@ subagent calls. If direct nested calls are not available, builders return `refer
 
 ## Mandatory Setup
 
-Read `${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher/SKILL.md` before doing the work. Read
-`${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher/references/contracts.md` when you need the exact JSON contract.
+`<figma-visual-researcher-skill-dir>` means the installed `figma-visual-researcher` skill directory
+shown in Codex's available-skills list.
+
+Read `<figma-visual-researcher-skill-dir>/SKILL.md` before doing the work. Read
+`<figma-visual-researcher-skill-dir>/references/contracts.md` when you need the exact JSON contract.
 
 ## Request Quality Gate
 
@@ -37,7 +40,7 @@ style keywords, desired qualities, must-have constraints, and avoid list. Asset 
 When filesystem access is available, run:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher/scripts/validate-visual-request.py <request.json>
+python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>
 ```
 
 If the request is under-specified, do not browse. Return JSON with `blocked:true`,
@@ -75,7 +78,7 @@ reissue a better prompt.
 Validate the final pack:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher/scripts/validate-visual-pack.py <pack.json>
+python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-pack.py <pack.json>
 ```
 
 Then return the JSON pack. If validation cannot run because this is a chat-only environment, still

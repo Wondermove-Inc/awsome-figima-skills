@@ -24,7 +24,10 @@ the orchestrator merges both (`PASS = structuralVerdict ∧ craftVerdict`).
 
 ## What you own (the structural dimensions)
 
-Execute `${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-redesign/references/completeness-floor.md` checks (a)–(j) INDEPENDENTLY
+`<figma-redesign-skill-dir>` means the installed `figma-redesign` skill directory shown in Codex's
+available-skills list.
+
+Execute `<figma-redesign-skill-dir>/references/completeness-floor.md` checks (a)–(j) INDEPENDENTLY
 against the built frame, plus the D1–D5 structural dimensions of `review-protocol.md`:
 
 - **D1 Completeness** — build your OWN independent inventory of the original by node-walk (for

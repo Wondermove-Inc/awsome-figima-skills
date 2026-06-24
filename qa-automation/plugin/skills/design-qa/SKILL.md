@@ -33,8 +33,9 @@ agent internalizes the full evidence-collection + decision-tree; this skill does
   `get_metadata` (enumerate), `get_design_context` (name+position tree), `get_variable_defs`
   (tokens), `get_screenshot`. The local figma-mcp-express plugin **times out on large multi-page
   archive files** — only `list_channels` responds. Do not use it for these reads.
-- **Browser via LOCAL Playwright** (`${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/design-qa}/scripts/design_snapshot.py`,
-  which imports its sibling `dom_snapshot.py` — both ship with this skill). Requires Playwright in the
+- **Browser via LOCAL Playwright** (`<design-qa-skill-dir>/scripts/design_snapshot.py`,
+  where `<design-qa-skill-dir>` is the installed skill directory shown in Codex's available-skills
+  list. The script imports its sibling `dom_snapshot.py`; both ship with this skill). Requires Playwright in the
   active Python env: `pip install playwright && playwright install chromium` (optional `python-dotenv`
   for env-based login). A remote browser extension (claude-in-chrome) may control a Chrome on a
   different host that cannot reach the local dev server — confirm the snapshot's `title`/`url` match
@@ -90,7 +91,7 @@ confidence; ambiguous matches were confirmed by the user; gaps recorded.
 
 For each mapped screen (screens proceed in parallel — screen B captures while screen A is reviewed):
 1. Capture snapshot:
-   `python "${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/design-qa}/scripts/design_snapshot.py" --manifest design-qa/<slug> --screen <screen>
+   `python "<design-qa-skill-dir>/scripts/design_snapshot.py" --manifest design-qa/<slug> --screen <screen>
    --out .tmp/design-qa/<screen>.snap.json --screenshot .tmp/design-qa/<screen>.png`
    Reach (locale/role/auth/viewport) is applied from the manifest automatically.
    (Ad-hoc flags `--viewport/--locale/--set-storage` still work for one-off captures.)

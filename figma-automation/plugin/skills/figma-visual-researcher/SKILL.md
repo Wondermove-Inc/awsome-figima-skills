@@ -343,8 +343,11 @@ Good:
 
 Validate request objects before dispatch when possible:
 
+`<figma-visual-researcher-skill-dir>` means this installed skill directory as shown in Codex's
+available-skills list.
+
 ```bash
-python3 ${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher}/scripts/validate-visual-request.py <request.json>
+python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>
 ```
 
 ## Files

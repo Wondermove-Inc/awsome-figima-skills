@@ -132,8 +132,9 @@ screen; all library gaps resolved.
    the builder would have to invent it.
 7. **Schema-check both.** Follow `references/schema-checks.md`:
    - `DESIGN.md`: `npx @google/design.md lint <path> --format json` — regenerate-on-fail (max 3×).
-   - `COPY.md`: `python "${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-product-spec}/scripts/check_copy.py" <COPY.md> --screens <id,id,...>` — validates frontmatter
+   - `COPY.md`: `python "<figma-product-spec-skill-dir>/scripts/check_copy.py" <COPY.md> --screens <id,id,...>` — validates frontmatter
      against `assets/copy-md.schema.json` and that the `screens` map covers every confirmed screen id.
+     `<figma-product-spec-skill-dir>` is this installed skill directory as shown in Codex's available-skills list.
    A still-failing artifact after 3 attempts is a blocking failure — report it, don't advance.
 
 ## Grounding discipline (why "derive, don't invent")

@@ -41,10 +41,12 @@ plugin/
 From the repository root:
 
 ```bash
-./scripts/stage-codex.sh
+codex plugin marketplace add "$(pwd)"
+codex plugin add figma-automation@awesome-figma-skills
 ```
 
-Restart Codex after staging.
+Install `figma-mcp-express@awesome-figma-skills` as well for live Figma MCP
+tools. Start a new Codex thread after installation.
 
 ## Claude Code Setup
 

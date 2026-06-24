@@ -23,8 +23,11 @@ hinges on it). You are READ-ONLY. Neither verifier issues PASS alone — the orc
 
 ## What you own (the judgment dimensions)
 
+`<figma-redesign-skill-dir>` means the installed `figma-redesign` skill directory shown in Codex's
+available-skills list.
+
 Read and execute the craft/function sections of
-`${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-redesign/references/review-protocol.md` — **D6, §1G, §1H, §5F, D7**. Skip the
+`<figma-redesign-skill-dir>/references/review-protocol.md` — **D6, §1G, §1H, §5F, D7**. Skip the
 D1–D5 mechanical re-derivation; that is the structural verifier's job.
 
 - **D6 Craft** — Production-Craft scoring (PC1–PC13): visual hierarchy, spacing rhythm, repeated

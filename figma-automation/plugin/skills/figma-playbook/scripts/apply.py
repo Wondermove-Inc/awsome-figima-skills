@@ -3,7 +3,7 @@
 apply.py — sole atomic writer to all figma-automation playbook stores.
 
 Usage:
-  python "${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-playbook}/scripts/apply.py" <proposals.json> [--dry-run]
+  python scripts/apply.py <proposals.json> [--dry-run]
 
 Store resolution:
   global              → .claude/memory/
@@ -24,11 +24,8 @@ def _resolve_repo_root() -> pathlib.Path:
     """Locate the figma-automation repo root that owns the memory stores.
 
     The stores (`.claude/memory/`, `design-system/<slug>/memory/`) live in the
-    user's repo checkout, NOT next to this script. Under Claude the local
-    marketplace runs this file in-place inside the repo, but under Codex the
-    skill is COPIED to ~/.codex/skills/, so a __file__-relative walk would
-    resolve to the home dir and misdirect every write. Derive from the working
-    directory (the repo the user is in) instead, with an explicit override.
+    user's repo checkout, NOT next to this script. Derive from the working
+    directory (the repo the user is in), with an explicit override.
     """
     override = os.environ.get("FIGMA_PLAYBOOK_REPO_ROOT")
     if override:

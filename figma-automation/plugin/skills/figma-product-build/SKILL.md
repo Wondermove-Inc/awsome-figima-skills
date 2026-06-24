@@ -501,8 +501,11 @@ and what to avoid. It must also include structured prompt fields so the request 
 `assetKind`, `query`, and `preferredFormat` or `outputFormats`. The orchestrator should reject vague request items before
 dispatching `visual-researcher`, ideally by running:
 
+`<figma-visual-researcher-skill-dir>` means the installed `figma-visual-researcher` skill directory
+shown in Codex's available-skills list.
+
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-visual-researcher/scripts/validate-visual-request.py <request.json>
+python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>
 ```
 
 `visual-researcher` returns multiple candidates per `requestId`, not a single final answer. Pass all

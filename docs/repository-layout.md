@@ -14,9 +14,6 @@ figma-automation/
 
 qa-automation/
   plugin/              Design-fidelity QA skill and reviewer agent
-
-scripts/
-  stage-codex.sh       Mirrors local plugin skills and agents into Codex
 ```
 
 The old private umbrella setup used submodules and project-specific data. This

@@ -231,12 +231,14 @@ every rule, so the shell needs no special agent body.
 
 Required in the initial prompt:
 
+- Treat `<figma-redesign-skill-dir>` as the installed `figma-redesign` skill directory shown in
+  Codex's available-skills list.
 - "Read and FOLLOW EXACTLY:
-  `${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-redesign/references/builder-brief.md`,
-  `${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-redesign/references/original-inventory.md`,
-  `${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-redesign/references/variant-resolution.md`,
-  `${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-redesign/references/completeness-floor.md`,
-  `${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-redesign/references/live-discovery.md`."
+  `<figma-redesign-skill-dir>/references/builder-brief.md`,
+  `<figma-redesign-skill-dir>/references/original-inventory.md`,
+  `<figma-redesign-skill-dir>/references/variant-resolution.md`,
+  `<figma-redesign-skill-dir>/references/completeness-floor.md`,
+  `<figma-redesign-skill-dir>/references/live-discovery.md`."
 - "Build the **inventory FIRST** (node-walk, before building anything). See `original-inventory.md`."
 - "You do the WHOLE job: node-walk → inventory.json → live library MATCHING (discover + deliberate +
   resolve-variant + probe) → fresh DESIGN (auto-layout, component-first, FILL/HUG/FIXED) → L2 floor

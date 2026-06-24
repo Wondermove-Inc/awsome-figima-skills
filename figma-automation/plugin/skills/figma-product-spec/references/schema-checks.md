@@ -37,8 +37,11 @@ Treat a missing concept.md or blank art-direction fields as a red check — neve
 
 ## COPY.md — schema + screen coverage
 
+`<figma-product-spec-skill-dir>` means the installed `figma-product-spec` skill directory shown in
+Codex's available-skills list.
+
 ```bash
-python "${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-product-spec}/scripts/check_copy.py" <sot>/design/COPY.md --screens "login,dashboard,settings"
+python "<figma-product-spec-skill-dir>/scripts/check_copy.py" <sot>/design/COPY.md --screens "login,dashboard,settings"
 ```
 
 Pass the **confirmed screen ids** (from `state.json.screens[]`) as a comma list. The script:

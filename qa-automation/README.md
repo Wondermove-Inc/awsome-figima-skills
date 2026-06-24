@@ -37,10 +37,11 @@ playwright install chromium
 From the repository root:
 
 ```bash
-./scripts/stage-codex.sh
+codex plugin marketplace add "$(pwd)"
+codex plugin add qa-automation@awesome-figma-skills
 ```
 
-Restart Codex after staging.
+Start a new Codex thread after installation.
 
 ## Claude Code Setup
 

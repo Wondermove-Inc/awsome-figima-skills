@@ -135,8 +135,11 @@ superseded frame and confirm via `search_nodes` that exactly ONE frame with that
 See `figma-mcp-express/references/gotchas.md` "Node IDs and placement coordinates" for the
 full three-cause breakdown.
 
-```
-python3 "${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-product-build}/scripts/compute-layout.py" \
+`<figma-product-build-skill-dir>` is the installed `figma-product-build` skill directory shown in
+Codex's available-skills list.
+
+```bash
+python3 "<figma-product-build-skill-dir>/scripts/compute-layout.py" \
   --state <sot>/governance/state.json \
   [--frame-w 390] [--frame-h 844] [--state-gap 48] [--row-gap 120] [--section-gap 240]
 ```

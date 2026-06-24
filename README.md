@@ -40,11 +40,17 @@ figma-automation/plugin/
 qa-automation/plugin/
 ```
 
-For Codex, mirror the skills and agents into the local Codex scan directories:
+For Codex, add this repository as a marketplace and install the plugins:
 
 ```bash
-./scripts/stage-codex.sh
+codex plugin marketplace add <REPO>
+codex plugin add figma-mcp-express@awesome-figma-skills
+codex plugin add figma-automation@awesome-figma-skills
+codex plugin add qa-automation@awesome-figma-skills
 ```
+
+Replace `<REPO>` with the absolute path to this checkout. Start a new Codex
+thread after installation so the bundled skills are loaded.
 
 For Claude Code, add each plugin folder as a local marketplace plugin:
 

@@ -4,13 +4,13 @@ description: >-
   Memory management layer for /figma-redesign. Owns all read/write operations across
   library, project, and global memory stores. Called by /figma-redesign; also callable
   directly. Skills must never write to memory stores directly — always go through this
-  skill's `apply` command (which runs ${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-playbook}/scripts/apply.py).
+  skill's `apply` command (this skill's `scripts/apply.py`).
 ---
 
 # /figma-playbook — Progressive Memory Management
 
 Manages a three-layer memory system that learns library patterns and project conventions
-over time. All writes go through `${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-playbook}/scripts/apply.py` for atomic, flock-safe updates.
+over time. All writes go through this skill's `scripts/apply.py` for atomic, flock-safe updates.
 
 ---
 
@@ -170,9 +170,9 @@ Write `design-system/_build-cache/learn-proposals-<key>.json` → call `apply`.
 
 **How to execute:**
 ```bash
-python ${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-playbook}/scripts/apply.py <proposals.json>
+python scripts/apply.py <proposals.json>
 # or dry-run:
-python ${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-playbook}/scripts/apply.py <proposals.json> --dry-run
+python scripts/apply.py <proposals.json> --dry-run
 ```
 
 Report: applied / skipped / errors. On any error, surface to the user before proceeding.
@@ -386,7 +386,7 @@ Then check: **is this already covered by existing memory?**
 
 #### Phase 7 — Apply + Report
 ```bash
-python ${SKILL_DIR:-${CLAUDE_PLUGIN_ROOT:-${CODEX_HOME:-$HOME/.codex}}/skills/figma-playbook}/scripts/apply.py <proposals.json>
+python scripts/apply.py <proposals.json>
 ```
 
 Report to user:

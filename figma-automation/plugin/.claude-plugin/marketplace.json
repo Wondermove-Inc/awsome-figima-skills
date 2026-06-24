@@ -3,6 +3,7 @@
   "owner": {
     "name": "sunhome243"
   },
+  "description": "Figma redesign, PRD-to-product, visual research, and design-memory automation.",
   "plugins": [
     {
       "name": "figma-automation",

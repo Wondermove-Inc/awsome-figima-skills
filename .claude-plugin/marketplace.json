@@ -1,0 +1,24 @@
+{
+  "name": "awesome-figma-skills",
+  "owner": {
+    "name": "Wondermove Inc."
+  },
+  "description": "Figma MCP, product-design automation, and design-QA plugins for Claude Code.",
+  "plugins": [
+    {
+      "name": "figma-mcp-express",
+      "source": "./figma-mcp-express",
+      "description": "Figma MCP with batch ops, multi-channel routing, library automation, and design skills."
+    },
+    {
+      "name": "figma-automation",
+      "source": "./figma-automation/plugin",
+      "description": "Figma design automation: redesign, PRD-to-product pipeline, visual research, and progressive memory."
+    },
+    {
+      "name": "qa-automation",
+      "source": "./qa-automation/plugin",
+      "description": "Design-QA implementation-fidelity review for comparing a live rendered app against Figma."
+    }
+  ]
+}

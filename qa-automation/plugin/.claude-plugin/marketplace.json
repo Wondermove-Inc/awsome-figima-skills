@@ -3,6 +3,7 @@
   "owner": {
     "name": "sunhome243"
   },
+  "description": "Design-QA implementation-fidelity review for live apps and Figma frames.",
   "plugins": [
     {
       "name": "qa-automation",

@@ -17,6 +17,9 @@ qa-automation/
 
 .agents/plugins/
   marketplace.json     Codex marketplace entries for the plugin folders
+
+.claude-plugin/
+  marketplace.json     Claude Code marketplace entries for the same plugin folders
 ```
 
 The repository intentionally tracks only source, plugin packages, and reusable

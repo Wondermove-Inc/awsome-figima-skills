@@ -1,6 +1,6 @@
 ---
 name: figma
-description: "Unified entry point for the Figma workflow. Routes to /figma-redesign (re-skin an existing screen) and /figma-product (build a brand-new product from a PRD). Use whenever the user says /figma redesign or /figma create, asks to redesign a screen with a new library, asks to design/build screens from a PRD or spec, or references Figma + a redesign or greenfield-design intent."
+description: Route Figma design tasks to figma-redesign or figma-product. Use for Figma redesign, design-system migration, PRD-to-Figma, or greenfield screen creation.
 ---
 
 # /figma — Figma Workflow Entry Point
@@ -26,26 +26,7 @@ Pick by what exists: an **existing frame to re-skin** → `redesign`; a **PRD/sp
 
 If the user types `/figma` with any other verb, respond with a redirect:
 
-> "`/figma <verb>` is not available. The active skill is `/figma redesign <library> --frame <id>` — a self-contained fresh-build redesign of one screen into a target library."
->
-> "Previously available verbs (init, audit, report, diff, tokenize, design-md, annotate, brainstorm, flowchart, wireframe, refresh-cache, matching) are archived."
-
-## Archived verb aliases (inform user, then offer redesign)
-
-| Old verb | Response |
-|---|---|
-| `harvest`, `relibrary`, `rebuild` | Archived. Use `/figma redesign <library> --frame <id>` — it discovers the library live and builds fresh, no upstream pipeline needed. |
-| `audit`, `violations`, `gaps`, `health`, `clean` | Archived. |
-| `report` | Archived. |
-| `diff` | Archived. |
-| `tokenize` | Archived. |
-| `annotate` | Archived. |
-| `design-md` | Archived. |
-| `design` | Archived. Use `/figma redesign`. |
-| `init`, `list`, `use`, `doctor` | Archived. Project registry lives in `.claude/figma-projects.json` — read/edit directly. |
-| `brainstorm`, `analyze`, `flowchart`, `wireframe` | Archived. |
-| `refresh-cache`, `matching` | Archived. |
-| `normalize`, `dream`, `swap-library`, `swap-hub` | Archived. |
+> "`/figma <verb>` is not available. Use `/figma redesign <library> --frame <id>` for an existing screen or `/figma create <prd-path> --library <url-or-key>` for a PRD-to-Figma product build."
 
 ## REDESIGN FLOW
 

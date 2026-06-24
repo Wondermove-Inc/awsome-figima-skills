@@ -1,14 +1,6 @@
 ---
 name: figma-product-direction
-description: >-
-  Art-direction step of the product pipeline. Use after figma-product-prd (Research) and before
-  figma-product-foundation. Turns the research (purpose map + register tags + audience) into a
-  distinctive, purposeful visual DIRECTION: grounds on real references + a current taste scan
-  (era-trends + category-taste), decides the register/cohesion system, DIVERGES into several
-  orthogonal concepts, CRITIQUES them adversarially (anti-generic), converges to one signed-off
-  concept.md (signature DNA + craft toolkits + creative-mode-per-register map), proves it with an
-  HTML look-&-feel, and gates on ONE human direction sign-off. Invoked by /figma-product; also
-  runnable standalone to (re)set the art direction.
+description: Create art direction for the Figma product pipeline after PRD research. Use to choose visual direction, concept, references, and craft rules before foundation/spec/build.
 ---
 
 # /figma-product-direction — Art Direction (Step 2)

@@ -1,15 +1,6 @@
 ---
 name: figma-product-foundation
-description: >-
-  Step 3 of /figma-product — turn the signed-off art direction (concept.md from Step 2) into a
-  concrete, library-bound DESIGN SYSTEM before any spec or screen. Does NOT choose the look (that was
-  decided and human-approved at Gate A); it faithfully systematizes concept.md into design-language,
-  interaction/motion, haptics, and brand-voice decisions, builds the bespoke SIGNATURE LAYER (the
-  motif / illustration / motion tokens the concept calls for), and maps every decision to the target
-  library's tokens/variants — flagging gaps. Library-first (fetches the catalog before mapping).
-  Reads audience from the Research step (prd-analysis.json); it does not derive the audience or choose
-  the aesthetic itself. Orchestrated by /figma-product but independently invocable. Use whenever you need
-  to convert an approved design direction into a token-bound, component-mapped design system.
+description: Convert an approved direction into a library-bound design foundation. Use to map tokens, components, interaction, brand voice, and platform conventions before specs.
 ---
 
 # /figma-product-foundation — concept.md → the design system

@@ -1,13 +1,6 @@
 ---
 name: figma-product
-description: >-
-  Greenfield PRD → high-fidelity Figma product orchestrator. Use when the user wants to design,
-  create, or build a product/feature/app/screens from a PRD, spec, requirements doc, or product brief,
-  including "design this in Figma", "make the screens", or "turn this PRD into a design". Runs
-  figma-product-prd (Research), direction, foundation, spec, and build; writes direction/foundation/spec
-  files and Figma screens. Uses
-  visual-researcher for reference/asset prefetch and missing-media resolution. For re-skinning an
-  existing screen, use /figma-redesign.
+description: Orchestrate PRD-to-Figma product design. Use when turning a PRD, spec, brief, or requirements doc into researched, specified, high-fidelity Figma screens.
 ---
 
 # /figma-product — PRD → High-Fidelity Figma Product (orchestrator)

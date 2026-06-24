@@ -38,10 +38,10 @@ plugin/
 
 ## Codex Setup
 
-From the repository root:
+Install from the public repository marketplace:
 
 ```bash
-codex plugin marketplace add "$(pwd)"
+codex plugin marketplace add https://github.com/Wondermove-Inc/awsome-figima-skills.git
 codex plugin add figma-automation@awesome-figma-skills
 ```
 
@@ -60,6 +60,6 @@ Restart Claude Code after installing or updating the plugin.
 
 ## Public Repo Policy
 
-Do not add private Figma file exports, client design-system catalogs, local
-memory folders, screenshots, or `.env` files to this folder. Keep those in a
-private project repository.
+Do not add Figma file exports, project design-system catalogs, local memory
+folders, screenshots, or `.env` files to this folder. Keep those in the project
+repository that owns that data.

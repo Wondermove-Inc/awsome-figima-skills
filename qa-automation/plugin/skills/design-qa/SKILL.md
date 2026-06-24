@@ -1,16 +1,6 @@
 ---
 name: design-qa
-description: >-
-  Implementation-fidelity design review — verify that the LIVE running app matches its Figma
-  design (NOT behavioral QA, NOT auto-fixing). Accesses all three legs: codebase (screen
-  discovery + drift localization), Figma (design intent via official Figma MCP), and the
-  browser (actual render via local Playwright). A general method bound to a project by a
-  per-project manifest (`design-qa/<slug>/`); maps screens↔Figma frames first (never silently
-  skips a hard-to-reach screen), then runs a 3-layer comparison (self-contained invariants →
-  identity-keyed categorical comparison → harm-gated layout) and gates each screen through the
-  adversarial design-qa-reviewer (Sonnet). READ-ONLY: produces findings + fix candidates, never
-  edits. Use when the user wants to check design fidelity / 구현 충실도 / "does the build match
-  the design" for a codebase + Figma file.
+description: Review implementation fidelity between a live app and Figma design. Use for design QA, screen-to-frame mapping, Playwright snapshots, and read-only drift findings.
 ---
 
 You run an implementation-fidelity review: **is the rendered app faithful to the Figma design?**
@@ -31,8 +21,8 @@ agent internalizes the full evidence-collection + decision-tree; this skill does
 
 - **Figma reads via the official Figma MCP** (`mcp__plugin_figma_figma__*`, `fileKey`+`nodeId`):
   `get_metadata` (enumerate), `get_design_context` (name+position tree), `get_variable_defs`
-  (tokens), `get_screenshot`. The local figma-mcp-express plugin **times out on large multi-page
-  archive files** — only `list_channels` responds. Do not use it for these reads.
+  (tokens), `get_screenshot`. The local figma-mcp-express plugin can time out on large multi-page
+  Figma files — only `list_channels` responds. Do not use it for these reads.
 - **Browser via LOCAL Playwright** (`<design-qa-skill-dir>/scripts/design_snapshot.py`,
   where `<design-qa-skill-dir>` is the installed skill directory shown in Codex's available-skills
   list. The script imports its sibling `dom_snapshot.py`; both ship with this skill). Requires Playwright in the
@@ -56,7 +46,7 @@ agent internalizes the full evidence-collection + decision-tree; this skill does
 2. **Manifest exists →** load `project.json` + `screen-map.json` + `conventions.md`. Skip to the
    phase the user wants (a full sweep, or one screen). Re-runs **merge**, never overwrite.
 3. **No manifest → init.** Collect the binding (ask only what you cannot read from the codebase):
-   Figma `fileKey` + seed page node-id (scope to ONE page for a large archive); how to run the
+   Figma `fileKey` + seed page node-id (scope to ONE page for a large Figma file); how to run the
    app + port; how locale/role are selected. Write `project.json`, then proceed to Phase 1 to
    build `screen-map.json` + `conventions.md`.
 

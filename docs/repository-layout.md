@@ -14,8 +14,10 @@ figma-automation/
 
 qa-automation/
   plugin/              Design-fidelity QA skill and reviewer agent
+
+.agents/plugins/
+  marketplace.json     Codex marketplace entries for the plugin folders
 ```
 
-The old private umbrella setup used submodules and project-specific data. This
-public repository intentionally tracks only the source, plugin, and reusable
+The repository intentionally tracks only source, plugin packages, and reusable
 documentation that are safe to publish.

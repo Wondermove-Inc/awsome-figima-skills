@@ -11,9 +11,6 @@ This repository is a public, flat-source distribution. It combines the
 | `figma-automation/plugin/` | Product-design and Figma build skills for Claude Code and Codex. |
 | `qa-automation/plugin/` | Design-fidelity QA skill and reviewer agent for comparing a live app against Figma. |
 
-The old umbrella repository used git submodules. This public repository does
-not: every included file is tracked directly so users can clone it normally.
-
 ## Quick Start
 
 ### Figma MCP Express
@@ -40,17 +37,20 @@ figma-automation/plugin/
 qa-automation/plugin/
 ```
 
-For Codex, add this repository as a marketplace and install the plugins:
+For Codex, add this Git repository as a marketplace and install the plugins:
 
 ```bash
-codex plugin marketplace add <REPO>
+codex plugin marketplace add https://github.com/Wondermove-Inc/awsome-figima-skills.git
 codex plugin add figma-mcp-express@awesome-figma-skills
 codex plugin add figma-automation@awesome-figma-skills
 codex plugin add qa-automation@awesome-figma-skills
 ```
 
-Replace `<REPO>` with the absolute path to this checkout. Start a new Codex
-thread after installation so the bundled skills are loaded.
+Start a new Codex thread after installation so the bundled skills and MCP server
+are loaded. The marketplace file lives at `.agents/plugins/marketplace.json`,
+and each plugin path is relative to the repository root. No project-level
+`.mcp.json` is required for the default Codex install because
+`figma-mcp-express` bundles its MCP server config.
 
 For Claude Code, add each plugin folder as a local marketplace plugin:
 
@@ -62,7 +62,7 @@ claude plugin marketplace add ./qa-automation/plugin
 ## Repository Hygiene
 
 - Do not commit Figma tokens, `.env` files, screenshots, browser snapshots, or generated QA reports.
-- Keep project-specific design-system data out of this public repository unless it is explicitly sanitized.
+- Keep project-specific design-system data out of this repository unless it is explicitly sanitized.
 - Keep generated builds out of git. `figma-mcp-express/plugin/dist/` and `figma-mcp-express/bin/` are build outputs.
 - Tag pushes can trigger release automation under `figma-mcp-express/.github/workflows/`; only push release tags intentionally.
 

@@ -1,14 +1,6 @@
 ---
 name: figma-redesign
-description: >-
-  Production redesign of ONE Figma screen into a target design-system library — the primary,
-  self-contained redesign skill. No upstream report, no relibrary matching, no cached catalog:
-  the builder discovers the target library LIVE per element, builds fresh from component
-  instances (auto-layout + tokens native), self-reviews on two axes (COMPLETENESS via an
-  exhaustive original-inventory + CRAFT via the Production-Craft enum), then passes a single
-  adversarial Sonnet gate. WRITES to the Figma canvas. Use whenever the user wants to redesign,
-  migrate, re-skin, port, or rebuild a screen with a different/new design-system library — even
-  when they say "rebuild", "swap the library", or "make this in <library>" rather than "redesign".
+description: Redesign or migrate one existing Figma screen into a target design-system library. Use for re-skin, rebuild, port, or swap-library requests that write to Figma.
 ---
 
 # /figma-redesign — On-the-Fly Fresh Redesign of One Screen
@@ -23,9 +15,8 @@ components, variants, tokens, and auto-layout.
 > library on the fly — best for component-heavy enterprise UI (tables, forms, dialogs, cards), which
 > is most screens. For a region with dense idiosyncratic custom layout the library has no pattern for,
 > the builder may clone-and-transform THAT region in place — an internal tactic, not a separate skill.
-> The older report-driven rebuild/relibrary pipeline is archived; this skill supersedes it. It failed
-> because the lossy report→build handoff made neither half thorough, which is why this skill folds
-> discovery, build, and review into one inventory-driven loop (the three-axis model below).
+> Discovery, build, and review happen in one inventory-driven loop so the original screen, target
+> library, and finished canvas stay connected through the same run.
 
 ---
 

@@ -82,7 +82,7 @@ This avoids reporting harmless auto-layout redistribution as design drift.
 
 ## Operational Findings
 
-- Large archive Figma files should be read through a scoped official Figma MCP
+- Large Figma files should be read through a scoped official Figma MCP
   call when the local live plugin times out on whole-document reads.
 - Browser capture should use local Playwright on the same host as the running
   app.

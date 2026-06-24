@@ -1,15 +1,6 @@
 ---
 name: figma-product-spec
-description: >-
-  Step 4 of /figma-product — author the build-ready spec: DESIGN.md (a library-faithful design spec in
-  the @google/design.md schema, with per-screen layout intent AND per-screen art-direction fields) and
-  COPY.md (a copywriting system PLUS the real per-screen strings). Both derive strictly from the
-  foundation/ dossier (Step 3) AND the signed-off direction/concept.md (Step 2) — no fresh aesthetic
-  choices here — and BOTH are schema-checked before the build runs (DESIGN.md via @google/design.md
-  lint, COPY.md via copy-md.schema.json with full screen coverage). Surfaces and resolves any remaining
-  library gaps with the user. Orchestrated by /figma-product but independently invocable. Use whenever
-  you need to produce a design spec + copy from an established foundation + concept, turn a design
-  language into a token-bound DESIGN.md, or write the actual UI copy for a set of screens.
+description: Author build-ready DESIGN.md and COPY.md from an approved foundation and concept. Use before Figma build to lock layout intent, art direction fields, and UI copy.
 ---
 
 # /figma-product-spec — author DESIGN.md + COPY.md from the foundation + concept

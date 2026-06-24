@@ -2,12 +2,12 @@
 
 ## Never Commit
 
-- Figma personal access tokens
+- Figma access tokens
 - `.env` files
 - browser snapshots
 - screenshots from authenticated apps
 - generated QA reports
-- client-specific design-system catalogs
+- project-specific design-system catalogs
 - local machine agent configuration
 
 ## Figma Tokens

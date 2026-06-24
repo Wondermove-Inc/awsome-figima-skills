@@ -22,7 +22,7 @@ design-qa/<slug>/
   "slug": "<app-name-kebab>",
   "figma": {
     "fileKey": "<Figma file key>",
-    "defaultPageScope": "<page node-id to scope a large archive file>"
+    "defaultPageScope": "<page node-id to scope a large Figma file>"
   },
   "app": {
     "stack": "<framework + styling, e.g. React + Vite + MUI + Emotion>",

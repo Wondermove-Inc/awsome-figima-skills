@@ -1,6 +1,6 @@
 ---
 name: figma-visual-researcher
-description: Dynamic visual research and asset procurement for Figma product builds. Use when an orchestrator, builder, or reviewer needs real product UI/UX reference screenshots, anchor pattern analysis, brand logos, icons, photos, avatars, Lottie assets, or a structured reference/asset pack before or during a Figma build. Replaces narrow asset-fetch scripts with source-aware research, candidate judgment, provenance, and local file handoff.
+description: Find visual references and media assets for Figma product builds. Use for UI screenshots, pattern analysis, logos, icons, photos, avatars, or asset packs with provenance.
 ---
 
 # Figma Visual Researcher

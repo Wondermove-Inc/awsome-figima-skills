@@ -1,7 +1,7 @@
 # Repository Instructions
 
 This repository is a public, flat-source distribution for Figma automation
-tools. It is not an umbrella repo and does not use git submodules.
+tools.
 
 ## Working Rules
 
@@ -24,9 +24,8 @@ scripts/                 Local helper scripts
 
 ## Public Repository Constraints
 
-This repository must stay safe to publish. Keep private client projects,
-project-specific design-system catalogs, local caches, and machine-specific
-agent configuration out of git.
+This repository must stay safe to publish. Keep project-specific design-system
+catalogs, local caches, and machine-specific agent configuration out of git.
 
 `figma-mcp-express` is the open-source engine. `figma-automation` and
 `qa-automation` are included as flat plugin folders for local agent use.

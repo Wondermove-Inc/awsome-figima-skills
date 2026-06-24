@@ -1,17 +1,6 @@
 ---
 name: figma-product-prd
-description: >-
-  Step 1 (Research) of /figma-product — ingest a PRD behind a PM-grade quality gate AND do the UX
-  research downstream art direction grounds on, before any design. Reads a PRD file/folder, structures
-  it into screens/flows/states/rules, and acts as a demanding PM: surfaces EVERY functional gap,
-  ambiguity, undefined state, and edge case and resolves them WITH the user, so the build is fully
-  traceable to the PRD. Also derives the research grounding — per-screen purpose + register tag, the
-  audience (persona, context, mental model, accessibility, JTBD), the flows/IA, and success metrics +
-  constraints. Outputs a build-ready PRD (prd-analysis.json) + a user-confirmed screen list.
-  Orchestrated by /figma-product but independently invocable. Use whenever you need to turn a
-  PRD/spec/requirements doc into a build-ready screen plan, or do the audience/UX research for a
-  product build — "go through this PRD", "what screens do we need", "who is this app for", "is this
-  spec ready to design".
+description: Prepare a PRD for Figma product design. Use to parse requirements, identify screens, flows, states, gaps, audience, and produce a build-ready screen plan.
 ---
 
 # /figma-product-prd — PRD ingest + PM quality gate

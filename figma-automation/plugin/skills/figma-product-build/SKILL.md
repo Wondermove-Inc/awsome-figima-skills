@@ -1,13 +1,6 @@
 ---
 name: figma-product-build
-description: >-
-  Step 5 (final) of /figma-product — build the high-fidelity Figma screens from the spec, gated like
-  /figma-redesign: L1 builder self-eval → L2 mechanical pre-gate → L3 two parallel Sonnet verifiers
-  (structural + craft, AND-merged). Completeness reference = the SPEC (DESIGN.md layout intent + COPY.md
-  strings) plus the frozen direction/concept.md (the L3 craft bar). Reuses the figma-builder (Opus) +
-  the two verifier agents; component-first, bound tokens, real copy — zero placeholder text, zero raw
-  hex. Orchestrated by /figma-product but independently invocable. Use whenever you need to build
-  screens in Figma from a DESIGN.md + COPY.md spec, or render an approved spec to high-fidelity canvas.
+description: Build high-fidelity Figma screens from approved DESIGN.md and COPY.md. Use for final PRD-to-product rendering with component-first, token-bound Figma output.
 ---
 
 # /figma-product-build — spec → high-fidelity screens, three-layer gated

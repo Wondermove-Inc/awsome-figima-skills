@@ -4,8 +4,8 @@ Design-fidelity QA skills and agents for comparing a live rendered application
 against its Figma design.
 
 This public distribution contains only the reusable plugin package. Project
-manifests, screenshots, browser snapshots, reports, and client knowledge bases
-belong in private project repositories.
+manifests, screenshots, browser snapshots, reports, and product knowledge bases
+belong in the project repository that owns that data.
 
 ## Contents
 
@@ -34,10 +34,10 @@ playwright install chromium
 
 ## Codex Setup
 
-From the repository root:
+Install from the public repository marketplace:
 
 ```bash
-codex plugin marketplace add "$(pwd)"
+codex plugin marketplace add https://github.com/Wondermove-Inc/awsome-figima-skills.git
 codex plugin add qa-automation@awesome-figma-skills
 ```
 

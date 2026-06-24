@@ -1,10 +1,6 @@
 ---
 name: figma-playbook
-description: >-
-  Memory management layer for /figma-redesign. Owns all read/write operations across
-  library, project, and global memory stores. Called by /figma-redesign; also callable
-  directly. Skills must never write to memory stores directly — always go through this
-  skill's `apply` command (this skill's `scripts/apply.py`).
+description: Manage Figma workflow memory stores. Use when reading or writing project, library, or global playbook memory through the atomic apply script.
 ---
 
 # /figma-playbook — Progressive Memory Management

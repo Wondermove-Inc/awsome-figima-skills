@@ -94,7 +94,7 @@ class VisualPackValidatorTest(unittest.TestCase):
                             "sourceYear": 2023,
                             "selectionRationale": "Old candidate that should not pass.",
                             "patternsToTransfer": ["dense rows"],
-                            "trendSignals": ["legacy card grid"],
+                            "trendSignals": ["dated card grid"],
                             "doNotCopy": ["pixel layout"],
                             "confidence": "high",
                         },

@@ -41,11 +41,10 @@ and produces nothing. Instead, the orchestrator **pre-digests once** into a sing
 binding recipe + the common build rules + shared-chrome ids + the self-eval checklist + a hard
 "read ONLY this file; never open the raw catalog; cap self-eval screenshots" discipline). Then each
 per-screen brief is **lean**: "read that one cheat-sheet, follow it; here is your screen's layout
-intent + COPY strings **inlined**; here is your x-lane." Builders load **no** skills upfront (the
-discipline is internalized in the agent prompt, and the cheat-sheet *digests* the `figma-design-patterns`
-+ `rad-spacing` craft rules into compact form — and the full craft skills are then read **progressively,
-just-in-time at the phase that needs each** (the spacing/layout skills when composing layout, mechanics
-when a tool question arises), one at a time, never an upfront firehose), read the cheat-sheet, and
+intent + COPY strings **inlined**; here is your x-lane." Builders load **no unrelated skills upfront**.
+The discipline is internalized in the agent prompt, and the cheat-sheet digests this skill's local craft
+rules into compact form. Read `figma-mcp-express` only when a tool/mechanics question arises, never as an
+upfront firehose; read the cheat-sheet, and
 inline-receive the spec/COPY — so they spend context building, not reading. Cap self-eval screenshots (≤2 per state) since
 images are the heaviest cost.
 
@@ -151,22 +150,18 @@ Instruct the builder:
   instead of the intent is the flat-output failure; your design plan is what L1 direction-fidelity and the
   L1.5 challenge hold the built screen to."
 - "SETUP — read the ONE cheat-sheet (`_build-cache/kit-keys.md`) first: keys + binding recipe + build
-  rules, condensed. Then read the craft skills **PROGRESSIVELY — just-in-time at the phase that needs each,
-  one at a time**, never a 4-skill upfront block (that overflows mid-setup → 'Prompt is too long' → you
-  build nothing). The ladder: when you start COMPOSING layout & spacing, read `figma-design-patterns`
-  (auto-layout + `references/padding-strategy.md` + composition) and `rad-spacing` **before you set gaps and
-  padding** — that is where spacing / placement craft enters and exactly where builds go weak; during
-  POLISH read `frontend-design`; consult `figma-mcp-express` mechanics the moment a specific tool / op
-  question arises. Read → apply → move on, so context stays bounded but the craft skills DO get read — the
-  failure to avoid is BOTH the upfront firehose AND never opening the spacing/layout skill at all. (Full-
-  load-every-run is the single-screen `/figma-redesign` default; this product brief overrides it with this
-  progressive ladder.)"
+  rules, condensed. Then read local craft references **progressively — just-in-time at the phase that
+  needs each**, never an upfront firehose. The ladder: when you start COMPOSING layout & spacing, apply
+  auto-layout, hierarchy, spacing rhythm, and component-first rules before setting gaps and padding;
+  during POLISH apply the anti-slop checks; consult `figma-mcp-express` mechanics the moment a specific
+  tool / op question arises. Read → apply → move on, so context stays bounded but craft still guides the
+  build."
 - "Build this ONE screen from library instances. The `### <screenId>` block in DESIGN.md is your
   layout contract: build the regions it names with the components/families and FILL/HUG/FIXED behavior
   it specifies. Pull all visible text VERBATIM from `COPY.md screens.<screenId>` — invent no copy."
-- "USE `figma-design-patterns` + `rad-spacing` as you build — every frame satisfies the CORE RULES and
-  trips ZERO anti-pattern flags (dynamic auto-layout + resize test, tokens not raw values, hierarchical
-  spacing from library variables, component-first, semantic layer names, no default/excess slots)."
+- "Use this skill's local craft rules as you build — every frame clears dynamic auto-layout + resize
+  testing, token binding rather than raw values, hierarchical spacing from library variables,
+  component-first construction, semantic layer names, and no default/excess slots."
 - "CRAFT AUTONOMY: where the spec is silent on a UI/UX detail, design it cleanly from `foundation/` +
   best practice — never skip or stub it. But if you feel you must invent a PRODUCT decision (a
   behavior, a data rule, a missing screen), STOP and return `escalate` — do not guess."
@@ -202,10 +197,10 @@ prove each clear with an artifact, judged against the SPEC and the `concept.md` 
   row, icon, modal…) is an INSTANCE, not a raw frame faking it.
 - **Auto-layout + resize** — every structural frame has `layoutMode`; FILL/HUG correct; `itemSpacing`
   ≤ 48; mentally resize the wrapper (1200/1600) — no clip, no rigid gap, no overflow.
-- **Craft** — score against `figma-design-patterns` CORE RULES (visual hierarchy, spacing rhythm,
+- **Craft** — score against this skill's craft rules (visual hierarchy, spacing rhythm,
   repeated-rows-as-one-component, intentional variants). A CORE-RULE violation = not done.
 - **Direction fidelity (concept.md craft bar)** — self-check the screen against `direction/concept.md`'s
-  exact frozen sections — the SAME bar the Opus reviewer (D6) uses, caught here cheaply first:
+  exact frozen sections — the SAME bar the advanced-model reviewer (D6) uses, caught here cheaply first:
   **Signature DNA** — is the motif / form-language / signature device actually carried, or is this
   generic kit placement? **Meaning-encoding philosophy** — does the hero carry its meaning by hierarchy,
   with NO redundant badge/label restating what an adjacent icon or value already conveys (PC13)?
@@ -244,11 +239,11 @@ the evidence.
 
 ## L1.5 — adversarial "are you sure?" SELF-REFLECTION CHALLENGE — MANDATORY, ALWAYS before L2/L3
 
-> **THIS STEP IS NON-NEGOTIABLE.** The orchestrator MUST resume the SAME builder for this challenge after EVERY build and after EVERY fix round. Do NOT skip it to save time. Do NOT proceed directly to L2 after L1 self-eval. The user has had to remind the orchestrator of this step repeatedly — treat any omission as a process failure. The L1.5 challenge is the cheapest defect-catcher in the pipeline (builder-time vs Opus-reviewer-time = ~10:1 cost ratio). It exists because builders reliably skim their own output; the challenge forces them to prove it adversarially.
+> **THIS STEP IS NON-NEGOTIABLE.** The orchestrator MUST resume the SAME builder for this challenge after EVERY build and after EVERY fix round. Do NOT skip it to save time. Do NOT proceed directly to L2 after L1 self-eval. The user has had to remind the orchestrator of this step repeatedly — treat any omission as a process failure. The L1.5 challenge is the cheapest defect-catcher in the pipeline (builder-time vs advanced-reviewer-time = ~10:1 cost ratio). It exists because builders reliably skim their own output; the challenge forces them to prove it adversarially.
 
 **Reuse figma-redesign's Phase 1.5 verbatim — do NOT reinvent it** (`figma-redesign/SKILL.md` ~line 167 +
 253). A builder's first "done" is a *claim*, not proof — builders skim their own work, so push back BEFORE
-spending the expensive Opus gate. **RESUME the SAME builder** (a follow-up message, not a fresh agent) with the
+spending the expensive advanced-model gate. **RESUME the SAME builder** (a follow-up message, not a fresh agent) with the
 adversarial dry-run challenge:
 
 > "Are you sure you're done? Run the reviewer's **D1–D6 on yourself, adversarially, against the SPEC**
@@ -257,7 +252,7 @@ adversarial dry-run challenge:
 > back EVERY authored binding; run the catalog-key audit; check **DRY** (every repeated composite is an
 > INSTANCE of one component, never a copy-pasted frame — and if you already made a component, that you
 > actually USED it); confirm loading mirrors the loaded layout with no lurch and chrome is identical
-> across states; score craft vs `figma-design-patterns` CORE RULES. **Prove each clear with an artifact.**
+> across states; score craft vs this skill's local craft rules. **Prove each clear with an artifact.**
 > **Pass the squint** — judging by visual weight alone (size, contrast, color-area, whitespace; not by
 > reading the words, which a sharp render lets you rationalize away), confirm the primary subject carries
 > the most weight, the primary action stands out, grouped surfaces read as distinct groups (card
@@ -289,7 +284,7 @@ When you already suspect specific defects from the returned screenshots, name th
 likeliest skimps: a too-large hero/cover pushing spec regions off-screen; a loading skeleton that doesn't
 mirror the real layout; a built-but-unused component; an instance-override that diverges chrome between
 states). The builder either **confirms good with evidence** → advance to L2, or **surfaces & fixes** issues
-→ that is the challenge working, catching defects cheaply before Opus. A "done" that can't survive the
+→ that is the challenge working, catching defects cheaply before advanced-model review. A "done" that can't survive the
 challenge never reaches the reviewer. (Same ritual re-runs after every post-review fix round.)
 
 Only after the challenge clears does L2 run.
@@ -299,9 +294,9 @@ Only after the challenge clears does L2 run.
 screenshot taken AFTER its last mutation. The orchestrator checks for this file before invoking L2.
 L2 will not start without it — "I did L1.5" is not an acceptable claim, the file is.
 
-## L2 — mechanical pre-gate (deterministic, green before any Sonnet call)
+## L2 — mechanical pre-gate (deterministic, green before any verifier call)
 
-No model judgment — scriptable checks, run by the orchestrator (Sonnet audit) on the builder's output:
+No model judgment — scriptable checks, run by the orchestrator on the builder's output:
 - **(a) catalog-key** — every built INSTANCE key ∈ the target library catalog; AND the reverse
   (component-first): every library-kind role IS an instance, not a raw frame. **Run this as a
   deterministic OFFLINE script, never a live grep.** The builder returns its `catalogKeyAudit`
@@ -331,7 +326,7 @@ No model judgment — scriptable checks, run by the orchestrator (Sonnet audit) 
   **Imported library instances legitimately carry the library's own paints — NOT a violation; never flag
   them.** If the target library is style/raw-hex based (no color variables), the project's palette-map /
   build-recipe declares a localized color spine + a spacing policy (e.g. `raw-integers-allowed`, discrete
-  scale) — judge against THAT, per CLAUDE.md Verification #8 precedent. Check the brief's token model.
+  scale) — judge against THAT project-specific token model. Check the brief's token model.
 - **(g) craft floor** — semantic layer names (no `Frame <number>`), no left-default variants, no
   visible placeholder slots.
 - **(h) touch-target audit** (mobile/tablet only) — from the build's `scan_nodes_by_types` +
@@ -339,7 +334,7 @@ No model judgment — scriptable checks, run by the orchestrator (Sonnet audit) 
   tab / chip / dropdown / input / pagination / toggle / tap-row) must have `min(width,height) ≥ 44` (iOS)
   / `≥ 48` (Android). The tappable bound is the node's own frame (the padded hit-area), not the glyph
   inside it. Report `touchTargetViolations`; any entry = FAIL (grow the frame / add padding). Skip on
-  `desktop-*` / pointer platforms. (Sibling of `figma-design-patterns` CORE RULE 13.)
+  `desktop-*` / pointer platforms.
 - **(i) accent-budget count** — count nodes binding the accent/primary token, clustered by role
   (primary-action / active-nav / urgent-status / active-filter / link / unread-dot / badge / decoration).
   More than **2 role-clusters** wearing the accent on one screen = `accentBudgetExceeded` (advisory →
@@ -358,8 +353,8 @@ The L3 gate is **two fresh READ-ONLY verifiers dispatched in ONE message (backgr
 
 | Verifier | Model | Owns (from the catalog below) |
 |---|---|---|
-| `figma-structural-verifier` | Sonnet | D1 completeness vs spec, D2 keys, D3 token binding, D4 auto-layout, D5 content = COPY verbatim, + the scriptable scans (touch-target / accent / icon / names) |
-| `figma-reviewer` | Sonnet | D6 craft (incl. **concept.md craft bar** = Signature DNA + Meaning-encoding philosophy + "What this is NOT", cross-screen consistency, **platform-appropriateness**, DRY, **design-authority redirect**, **all-states equal rigor**) + §1G/§1H meaning |
+| `figma-structural-verifier` | less advanced model / Sonnet tier | D1 completeness vs spec, D2 keys, D3 token binding, D4 auto-layout, D5 content = COPY verbatim, + the scriptable scans (touch-target / accent / icon / names) |
+| `figma-reviewer` | less advanced model / Sonnet tier | D6 craft (incl. **concept.md craft bar** = Signature DNA + Meaning-encoding philosophy + "What this is NOT", cross-screen consistency, **platform-appropriateness**, DRY, **design-authority redirect**, **all-states equal rigor**) + §1G/§1H meaning |
 
 Dispatch both, wait for BOTH (no short-circuit), then `PASS = structuralVerdict ∧ craftVerdict`; send the
 combined findings to the builder in one fix round.
@@ -416,7 +411,7 @@ preamble both use:
   for palette-matching values; flag ONLY off-palette colors. (⏳ MCP gap figma-mcp-express#27 — REVISE D3 to verify fill binding via reads once that lands.)
 - D4 auto-layout: run `scan_nodes_by_types(builtFrameId, ["FRAME"])` — any FRAME with `layoutMode="NONE"` (excluding named spacers + 0-size decoratives) = FAIL. FILL/HUG correct; `itemSpacing` ≤ 48. Mobile safe area: root frame `paddingTop ≥ 59`, `paddingBottom ≥ 34`.
 - D5 content: text matches COPY.md VERBATIM (scan_text_nodes); no placeholder.
-- D6 craft: Production-Craft scoring in figma-design-patterns vocabulary, INCLUDING **cross-screen
+- D6 craft: Production-Craft scoring in this skill's local craft vocabulary, INCLUDING **cross-screen
   consistency** — screenshot the built sibling screens (esp. the canon screen) and FAIL divergence from
   their established visual language (different padding scale, a differently-composed card/header, a
   re-drawn tab bar instead of the shared instance). The screens must read as one product.
@@ -531,7 +526,7 @@ A large component-SET import (`import_component_by_key` on a multi-variant set l
   tail-blocked, recover the tail; else stop the agent and recover.
 
 ## Done bar (per screen)
-1. Sonnet `verdict:"PASS"` (D1–D6 vs the spec). The only thing that can declare a screen done.
+1. Verifier `verdict:"PASS"` (D1–D6 vs the spec). The only thing that can declare a screen done.
 2. The builder passed the L1 self-eval ritual and L2 was green BEFORE the reviewer ran (so L3 ran once
    and passed first time).
 3. Ledger records, per element: a real library instance + the variant chosen + the COPY string source.

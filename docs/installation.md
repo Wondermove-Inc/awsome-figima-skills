@@ -16,34 +16,23 @@ Desktop plugin connection to read or edit the current Figma file.
 
 ## Codex Plugins
 
-Add the public Git repository as a marketplace, then install the plugins:
+Clone the public repository, then run one installer:
 
 ```bash
-codex plugin marketplace add https://github.com/Wondermove-Inc/awsome-figima-skills.git
-codex plugin add figma-mcp-express@awesome-figma-skills
-codex plugin add figma-automation@awesome-figma-skills
-codex plugin add qa-automation@awesome-figma-skills
+git clone https://github.com/Wondermove-Inc/awsome-figima-skills.git
+cd awsome-figima-skills
+./scripts/install.sh
 ```
 
 Start a new Codex thread after installation so the bundled skills and MCP server
-appear in the prompt.
+appear in the prompt. The installer adds the marketplace, installs the plugins,
+and activates the reusable Codex subagents used by the skills.
 
 This repository exposes Codex plugins through `.agents/plugins/marketplace.json`.
 The plugin `source.path` values are relative to the repository root, which is
 the expected layout for Git-backed marketplaces. The default Codex install does
 not need a project-level `.mcp.json`; the `figma-mcp-express` plugin provides
 its MCP server config.
-
-## Claude Code Plugins
-
-Register the local plugin folders:
-
-```bash
-claude plugin marketplace add ./figma-automation/plugin
-claude plugin marketplace add ./qa-automation/plugin
-```
-
-Restart Claude Code after installing or updating local plugins.
 
 ## Optional Figma Token
 

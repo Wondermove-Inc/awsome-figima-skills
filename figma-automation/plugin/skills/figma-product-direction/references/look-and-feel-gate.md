@@ -38,7 +38,7 @@ Write the HTML to the throwaway lab dir, then screenshot it headless. Any of:
     --screenshot="$PWD/out.png" "file://$PWD/screen.html"
   ```
 - a headless Chromium screenshot (`npx -y playwright screenshot --viewport-size=390,844 screen.html out.png`),
-- the `claude-in-chrome` / browser MCP: navigate to `file://…` then screenshot,
+- a browser MCP or local browser automation tool: navigate to `file://...` then screenshot,
 - `wkhtmltoimage` if present.
 
 Capture each zone at device width (and a 2× for craft inspection). **Judge the rendered PNG** — code

@@ -22,7 +22,7 @@ At run start (orchestrator pre-flight OR builder STEP 0):
 
 ```
 fetch_library_catalog(fileKey=<libraryFileKey>, scope:"all",
-  outPath:<sot>/rebuild/_redesign-cat-<libraryKey>.scratch.json)
+  outPath:<sot>/rebuild/_redesign-cat-<librarySlug>.scratch.json)
 → writes full catalog to disk; returns {counts, outPath, sample} (no payload in context)
 ```
 

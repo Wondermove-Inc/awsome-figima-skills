@@ -42,7 +42,7 @@ their respective breakpoints.
 > foundation maps a web-origin kit onto a touch `targetPlatform`, **do not assume the kit's native control
 > size is touch-safe.** Record in `library-mapping.md` that touch controls (CTAs, rows, inputs, tappable
 > icons) must be sized **up to ≥44/48 at the build layer** (and the label re-centered via the instance
-> method — see `figma-design-patterns` Buttons). This is a normal modality adaptation, not a kit defect or
+> method). This is a normal modality adaptation, not a kit defect or
 > a reason to switch libraries; flag it once at foundation time so the builder doesn't ship sub-floor controls.
 
 ---

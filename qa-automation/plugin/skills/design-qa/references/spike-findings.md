@@ -92,8 +92,8 @@ This avoids reporting harmless auto-layout redistribution as design drift.
 
 ## Operational Findings
 
-- Large Figma files should be read through a scoped official Figma MCP
-  call when the local live plugin times out on whole-document reads.
+- Large Figma files should be read through scoped figma-mcp-express
+  calls; prefer page/frame-bounded reads over whole-document reads.
 - Browser capture should use local Playwright on the same host as the running
   app.
 - Locale alignment is a precondition for text-dependent comparison.

@@ -67,67 +67,18 @@ references, 4-6 total references is still the bar.
   pre-2024 UI style). Only download candidates that survive thumbnail inspection.
 - **Save only curated references.** Candidates rejected after thumbnail review are discarded — do NOT
   save them locally. The local file count == the curated set.
-- **Persistent ref-library write for common patterns.** When the request is for a recurring UI pattern
-  (receipt/price-summary, empty state, list row, confirmation, payment, form), save the curated result
-  to **both** `<sot>/_build-cache/visual-research/<pattern>/` AND the cross-project persistent
-  ref-library at `design-system/_build-cache/ref-library/<pattern>/`. Future sessions check the
-  ref-library first — a common pattern should be fetched ONCE, ever.
+- **Persistent reference memory for common patterns.** When the request is for a recurring UI pattern
+  (receipt/price-summary, empty state, list row, confirmation, payment, form), save the curated files
+  under `<sot>/_build-cache/visual-research/<pattern>/` and also return a `memoryProposals` entry for
+  `figma-playbook apply` with `store:"global"`, `type:"reference"`, and a `ref-<pattern>-<slug>` name.
+  Future sessions check the global playbook memory first; `_build-cache` is only the local artifact
+  cache for this run.
 - **No browsing loops.** Stop at the first set that produces ≥2 curated candidates. More is not better
   when candidates are already strong.
 
 ## Reference Pack Contract
 
-Return:
-
-```json
-{
-  "mode": "reference_pack",
-  "references": [
-    {
-      "id": "ref-strava-leaderboard",
-      "requestId": "mobile-competitive-list-refs",
-      "candidateRank": 1,
-      "localPath": "/abs/path/foundation/refs/ref-strava-leaderboard.png",
-      "sourceUrl": "https://...",
-      "sourceYear": 2025,
-      "product": "Strava",
-      "screen": "Segment Leaderboard",
-      "selectionRationale": "Best candidate for dense ranked rows and rationed competitive accent.",
-      "patternsToTransfer": [
-        "dense ranked rows",
-        "number-first stat hierarchy",
-        "single rationed accent"
-      ],
-      "trendSignals": [
-        "compact rank rows",
-        "segmented leaderboard filters",
-        "restrained achievement emphasis"
-      ],
-      "doNotCopy": [
-        "exact dark theme",
-        "brand mark",
-        "pixel layout"
-      ],
-      "confidence": "high"
-    },
-    {
-      "id": "ref-nike-run-club-achievement",
-      "requestId": "mobile-competitive-list-refs",
-      "candidateRank": 2,
-      "localPath": "/abs/path/foundation/refs/ref-nike-run-club-achievement.png",
-      "sourceUrl": "https://...",
-      "sourceYear": 2024,
-      "product": "Nike Run Club",
-      "screen": "Achievement / activity detail",
-      "selectionRationale": "Alternate candidate for sports celebration and large stat hierarchy.",
-      "patternsToTransfer": ["achievement hierarchy", "sporty empty/result energy"],
-      "trendSignals": ["large stat-led result moment", "mobile-native activity recap"],
-      "doNotCopy": ["Nike brand language", "exact badge art"],
-      "confidence": "medium"
-    }
-  ]
-}
-```
+Read `references/contracts.md#reference-object` for the exact output fields and acceptance rules.
 
 Reference quality bar:
 
@@ -145,39 +96,8 @@ Reference quality bar:
 
 ## Asset Pack Contract
 
-Return:
-
-```json
-{
-  "mode": "asset_pack",
-  "assets": [
-    {
-      "id": "brand-naverpay",
-      "requestId": "brand-naverpay",
-      "candidateRank": 1,
-      "type": "brand",
-      "format": "svg",
-      "localPath": "/abs/path/_build-cache/assets/brand-naverpay.svg",
-      "ingest": "svg:createNodeFromSvg",
-      "sourceUrl": "https://...",
-      "selectionRationale": "Cleanest wordmark lockup for a compact payment-method row.",
-      "confidence": "high"
-    },
-    {
-      "id": "brand-naverpay-raster",
-      "requestId": "brand-naverpay",
-      "candidateRank": 2,
-      "type": "brand",
-      "format": "png",
-      "localPath": "/abs/path/_build-cache/assets/brand-naverpay-raster.png",
-      "ingest": "raster:import_image",
-      "sourceUrl": "https://...",
-      "selectionRationale": "Fallback raster candidate if the SVG lockup renders poorly at target size.",
-      "confidence": "medium"
-    }
-  ]
-}
-```
+Read `references/contracts.md#asset-object` for the exact output fields, ingest values, and acceptance
+rules.
 
 Asset quality bar:
 
@@ -246,57 +166,8 @@ Required fields for each `assetRequests[]` item:
 - `mustHave`: non-negotiable properties.
 - `avoid`: look-alikes, weak substitutes, bad source types, or visual treatments to reject.
 
-If a builder cannot continue because it needs media, it returns:
-
-```json
-{
-  "blocked": true,
-  "reason": "visual_research_required",
-  "referenceRequests": [
-    {
-      "id": "mobile-payment-status-refs",
-      "mode": "reference_pack",
-      "referenceKind": "real mobile payment status screenshots",
-      "brief": "Find real mobile payment-status UI references for a Korean fintech/sports app. I need trustworthy success, pending, and failure states with calm hierarchy, clear transaction outcome, compact receipt-like detail rows, restrained celebratory feedback, and no playful illustration-heavy treatment. Prefer polished production screenshots over marketing mockups; examples can be Toss, KakaoPay, NaverPay, Apple Pay, Stripe mobile, or similarly credible payment apps.",
-      "targetScreen": "payment status screen",
-      "screens": ["payment success", "payment pending", "payment failure"],
-      "minSourceYear": 2024,
-      "trendFocus": ["modern fintech status hierarchy", "compact receipt rows", "restrained confirmation feedback"],
-      "usage": "pattern reference before composing the payment completion and error states",
-      "placement": "full-screen mobile UI reference for status hierarchy and receipt detail layout",
-      "targetSize": "mobile screenshots near 390x844 or source listing screenshots large enough to inspect at phone scale",
-      "sourcePreference": ["App Store screenshots", "Google Play screenshots", "official product pages"],
-      "candidateCount": 4,
-      "desiredQualities": ["trustworthy", "Korean fintech", "mobile", "receipt detail", "clear status hierarchy"],
-      "styleKeywords": ["calm", "precise", "high-trust", "minimal celebration"],
-      "mustHave": ["real product screenshot", "source URL", "transferable status pattern"],
-      "avoid": ["generic success clipart", "landing-page mockups", "overly playful 3D mascot art"]
-    }
-  ],
-  "assetRequests": [
-    {
-      "id": "brand-naverpay",
-      "mode": "asset_pack",
-      "type": "brand",
-      "assetKind": "payment row logo",
-      "query": "NaverPay logo",
-      "brief": "Find a high-confidence NaverPay brand mark for a mobile payment-method row. Prefer an official or near-official SVG with the real NaverPay wordmark, clean transparent background, and horizontal lockup that can sit beside KakaoPay and card-network marks at small size. Do not substitute a generic Naver logo, generic wallet icon, or recreated look-alike.",
-      "targetScreen": "payment method selection screen",
-      "usage": "payment method row logo",
-      "placement": "left side of a compact payment-method list row beside the method label",
-      "targetSize": "16-24px tall rendered logo inside a 390px mobile payment row",
-      "preferredFormat": "svg",
-      "sourcePreference": ["official brand/press assets", "verified SVG source", "high-confidence public asset fallback"],
-      "candidateCount": 3,
-      "fallbackAllowed": false,
-      "styleKeywords": ["official", "flat vector", "small-size legible", "transparent background"],
-      "desiredQualities": ["authentic wordmark", "crisp at small size", "compatible with other payment logos"],
-      "mustHave": ["NaverPay, not generic Naver", "transparent background", "local SVG if available"],
-      "avoid": ["generic Naver symbol only", "raster screenshot crop", "fake recreation"]
-    }
-  ]
-}
-```
+If a builder cannot continue because it needs media, it returns the request object described in
+`references/contracts.md#builder-behavior`.
 
 The orchestrator dispatches `visual-researcher`, then resumes the same builder with the returned
 `references` and `assets`.
@@ -311,44 +182,13 @@ aesthetic, product context, target screen, intended Figma usage, constraints, an
 send vague requests such as "find trophy icon" or "get payment refs". For `reference_pack`, always ask
 for 2024-or-newer product evidence and name the current UI/UX trends to look for.
 
-Bad:
-
-```json
-{ "id": "trophy", "mode": "asset_pack", "type": "icon", "query": "trophy", "brief": "Find trophy icon" }
-```
-
-Good:
-
-```json
-{
-  "id": "hero-trophy",
-  "mode": "asset_pack",
-  "type": "icon",
-  "assetKind": "dimensional hero trophy icon",
-  "query": "premium 3D trophy celebration icon",
-  "brief": "Find a premium dimensional trophy visual for a mobile amateur sports tournament result screen. It should feel athletic, celebratory, and polished rather than childish, with a strong silhouette at 96-140px, transparent background, and no busy confetti competing with Korean copy.",
-  "targetScreen": "match result empty state",
-  "usage": "hero visual above the result summary and primary CTA",
-  "placement": "top-of-screen hero illustration",
-  "targetSize": "96-140px rendered size inside a 390px mobile frame, transparent background",
-  "preferredFormat": "svg-or-png",
-  "sourcePreference": ["Iconify colorful sets", "official public asset libraries", "LottieFiles poster fallback"],
-  "candidateCount": 3,
-  "styleKeywords": ["3D", "premium", "athletic", "celebratory", "small-size legible"],
-  "desiredQualities": ["strong silhouette", "clear against Korean text", "not childish", "mobile-safe"],
-  "mustHave": ["transparent background", "usable at 96px", "local file handoff"],
-  "avoid": ["flat line icon", "cartoon trophy", "busy confetti", "watermarked stock"]
-}
-```
+For bad and good request examples, read `references/contracts.md#builder-behavior`.
 
 Validate request objects before dispatch when possible:
 
 `<figma-visual-researcher-skill-dir>` means this installed skill directory as shown in Codex's
-available-skills list.
-
-```bash
-python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>
-```
+available-skills list. Run
+`python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>`.
 
 ## Files
 

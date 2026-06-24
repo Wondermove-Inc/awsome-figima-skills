@@ -42,7 +42,8 @@ the probe decides.
 
 ## 4 — PROBE TO CONFIRM
 
-**Axis-mapping (3b) is the primary discriminator; the probe confirms it.** You are a Sonnet agent —
+**Axis-mapping (3b) is the primary discriminator; the probe confirms it.** You are a less-advanced /
+Sonnet-tier agent —
 pixel-level visual comparison is the weak capability. Reason the variant from the axes + measured
 properties, arrive at a confident top pick, then render it to CONFIRM — not to discover.
 
@@ -61,7 +62,7 @@ yes → commit.  no → diagnose the wrong axis, fix it, re-confirm (still 1 can
 - ≤3 candidates per element; multi-candidate ONLY for a genuine 3b tie.
 - Delete each probe instance immediately after the decision (`delete_nodes`). No probe debris.
 - If probing fights you (imports hanging, screenshots slow): commit the structurally-reasoned pick.
-  Opus catches a variant miss; a watchdog death loses the whole build.
+  the advanced-model gate catches a variant miss; a watchdog death loses the whole build.
 
 Commit the winner; record in the ledger: which candidates were compared, the axis reasoning, the
 confirmation, and the slot/text-node relPaths (`get_node depth:6`) for content injection.

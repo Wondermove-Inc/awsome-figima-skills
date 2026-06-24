@@ -17,11 +17,11 @@ to the builder in one fix round.
 
 | Verifier | Model | Owns | Reads |
 |---|---|---|---|
-| **figma-structural-verifier** | Sonnet | D1 completeness (own inventory), D2 keys, D3 tokens, D4 auto-layout, D5 content presence, + the scriptable scans (touch-target, accent-budget, icon-family, semantic names) | this doc's **D1–D5** + `completeness-floor.md` (a)–(j) |
-| **figma-reviewer** | Opus | D6 craft (PC1–PC13 incl. hierarchy gate), §1G asset MEANING, §1H functional fidelity, §5F duplicate, D7 patterns | this doc's **D6, §1G, §1H, §5F, D7** |
+| **figma-structural-verifier** | less advanced model / Sonnet tier | D1 completeness (own inventory), D2 keys, D3 tokens, D4 auto-layout, D5 content presence, + the scriptable scans (touch-target, accent-budget, icon-family, semantic names) | this doc's **D1–D5** + `completeness-floor.md` (a)–(j) |
+| **figma-reviewer** | advanced model / Opus tier | D6 craft (PC1–PC13 incl. hierarchy gate), §1G asset MEANING, §1H functional fidelity, §5F duplicate, D7 patterns | this doc's **D6, §1G, §1H, §5F, D7** |
 
-The split maps each check to the model that fits it: objective/scannable facts → Sonnet; design taste +
-semantic meaning → Opus. Read and run **only your assigned dimensions** — the other verifier owns the
+The split maps each check to the model that fits it: objective/scannable facts → less advanced model /
+Sonnet tier; design taste + semantic meaning → advanced model / Opus tier. Read and run **only your assigned dimensions** — the other verifier owns the
 rest, in parallel; do not re-derive its layer.
 
 > **Cost model: this gate runs as FEW times as possible — ideally ONCE per screen.** The lever that keeps
@@ -32,15 +32,15 @@ rest, in parallel; do not re-derive its layer.
 
 ## Step 0 — cold start
 
-1. `Skill('figma-go')` — read-tool mechanics + bounded-read discipline. You are **READ-ONLY**: any
+1. `Skill('figma-mcp-express')` — read-tool mechanics + bounded-read discipline. You are **READ-ONLY**: any
    read tool is fair game (`save_screenshots`, `scan_nodes_by_types`, `get_nodes_info`, `get_node`,
    `search_nodes`, `get_design_context`, `get_metadata`…). Constraint: no creates/edits/deletes.
-2. `Skill('figma-design-patterns')` — **the craft vocabulary your D6 scores against.** The builder
-   builds with this lens (auto-layout dynamic + resize test, component-first, padding/gap ownership,
-   FILL/HUG/FIXED discipline, field affordance, no fake-distribute). You must judge in the SAME
-   language or you will rubber-stamp crude composition the builder's lens should have caught. A
-   violation of its CORE RULES is a D6 FAIL **even when the build matches the original** — the original
-   is the reference for intent, not a licence to reproduce a crude layout.
+2. Read this skill's local craft vocabulary for D6. The builder builds with this lens (auto-layout dynamic
+   + resize test, component-first, padding/gap ownership, FILL/HUG/FIXED discipline, field affordance, no
+   fake-distribute). You must judge in the SAME language or you will rubber-stamp crude composition the
+   builder's lens should have caught. A violation of these craft rules is a D6 FAIL **even when the build
+   matches the original** — the original is the reference for intent, not a licence to reproduce a crude
+   layout.
 3. You are given: `channel`, `builtFrameId`, `originalFrameId` (review is ALWAYS side-by-side),
    `ledgerPath`, `round` number, and on a re-review the prior round's findings to verify-as-fixed.
 
@@ -54,12 +54,12 @@ rest, in parallel; do not re-derive its layer.
 Both verifiers `save_screenshots` BOTH frames at `maxDimension: 2048` and inspect side by side first.
 Then each runs only its layer (they run in parallel, so neither waits for the other):
 
-**Structural verifier (Sonnet) — build YOUR OWN inventory, then diff.** Node-walk the original (recurse
+**Structural verifier (less advanced model / Sonnet tier) — build YOUR OWN inventory, then diff.** Node-walk the original (recurse
 every region, row, and chrome node: header / logo / toggle / back-button / footer / scrollbar), derive
 the feature list yourself, and diff against the build. The builder's ledger is advisory; yours is
 authoritative. Then run D1–D5 + the scriptable scans (scope every scan to the frame id, never a page).
 
-**Craft verifier (Opus) — judge from the screenshots + targeted reads.** You do not need a full node
+**Craft verifier (advanced model / Opus tier) — judge from the screenshots + targeted reads.** You do not need a full node
 inventory; compare the built and original frames visually for D6 craft, hierarchy, asset/function
 meaning, and pattern adherence, doing targeted structural reads only where a finding hinges on one.
 
@@ -109,7 +109,7 @@ These should already be green from L2 — spot-check only. If L2 missed one, fla
 
 
 
-**Binding-proof caveat:** the figma-go read projection (`get_node`/`get_nodes_info`) often returns a
+**Binding-proof caveat:** the figma-mcp-express read projection (`get_node`/`get_nodes_info`) often returns a
 codegen `styles` view that STRIPS `boundVariables` (a bound white fill looks identical to a raw one).
 Do NOT bounce a finding as "unverifiable" and do NOT assert a violation off a rendered hex alone.
 Use the builder's returned **`bindingProof`** (nodeId + prop + boundVariable read-back receipts):
@@ -126,7 +126,7 @@ visibly RAW value the proof does not cover (e.g. a documented gradient the build
   definition — it matches the original perfectly, its nodes are instances, tokens resolve — so the
   component-key check is the ONLY catch. The trap: the original file's library has same-named components
   with DIFFERENT keys, so a clone is indistinguishable except by key (a screen can ship most of its
-  components as original-library clones and still pass a full Opus review).
+  components as original-library clones and still pass a full advanced-model review).
   - Read EVERY instance's `mainComponent.key` (`get_nodes_info`, recurse into top-level organism
     instances) and check membership in the target catalog. Trust the builder's `catalogKeyAudit` only
     after spot-checking 2–3 keys live; if absent, run the check yourself.
@@ -175,13 +175,13 @@ the `l2GateMiss` so the floor tightens — but still report it.)
 | **PC9** | Inverted / weak hierarchy | Judging by visual weight (per the hierarchy gate below), the screen's PRIMARY SUBJECT does not carry the most weight — a status badge / metadata / price out-shouts the title; or cards dissolve into one undifferentiated column because their boundary is too weak to read as a group. Distinct from PC7 (rhythm): PC9 is specifically *the wrong element winning at a glance*. A sharp render hides this because you can still read the small text — judge weight independent of content (size/contrast/area), optionally blurring as an aid. |
 | **PC10** | Icon-family inconsistency | One screen mixes icon families / weights / grid sizes (thin-outline header icons + filled tab icons + ad-hoc mini glyphs inside grey circles). L2 (g6) flags it mechanically; at the gate confirm one family + one weight per screen. Mixed = the clearest "assembled, not designed" tell. |
 | **PC11** | Urgency / emotional weight mismatch | The screen's MOST important state is rendered WEAKEST — a time-critical alert that demands immediate action shown as a small low-contrast pill while decorative metrics dominate; a high-significance outcome (a win, an approval, a milestone) styled identically to a routine row. Visual weight must track *stakes*: the element the user most needs to notice or feel should win the squint. The original's intent is the reference; under-weighting a high-stakes moment = FAIL. |
-| **PC12** | Dead-space / under-fill | A short-content screen leaves a large vacuum (200–400px of empty surface above the tab bar) that reads as *broken/unfinished*, not minimal. Minimal has intentional rhythm; a vacuum has none. The fix is a designed fill (recommended next action, related content, a true empty-state composition — see `figma-design-patterns` Rule 9), not stretched gaps. Pairs with the empty-state rule but applies to *populated* screens whose content is simply short. |
+| **PC12** | Dead-space / under-fill | A short-content screen leaves a large vacuum (200–400px of empty surface above the tab bar) that reads as *broken/unfinished*, not minimal. Minimal has intentional rhythm; a vacuum has none. The fix is a designed fill (recommended next action, related content, a true empty-state composition), not stretched gaps. Pairs with the empty-state rule but applies to *populated* screens whose content is simply short. |
 | **PC13** | Redundant label / badge | A label, chip, or **status badge that restates what an adjacent icon + headline (or a visible countdown / value) already conveys** — the state is already legible without it, so the badge is dead weight (no-redundant-labels). **The trap this catches:** a reviewer checks whether the badge is *styled* correctly and never asks whether it should *exist*, affirming dead weight as "correct treatment." For every intentionally-added label/chip/badge, ask **"does this carry information the icon / headline / value beside it does not already convey?"** — if not, **remove it** (don't restyle it). Distinct from PC6 (a component's leftover *default* slot): PC13 is an *added* element duplicating meaning already present. A sibling element earns its place only when it states a genuinely *different* fact, not a synonym of the one beside it. |
 
 This enum is **append-only**: every production-craft miss a user catches that is not already covered
 becomes a new PC row (mechanical-sibling pushed to L2/R1 if checkable, else a judgment line here). That is
 how the bar rises each cycle — the gate learns from every catch, the way completeness learned from
-inventory. Also score the build against `figma-design-patterns` CORE RULES (dynamic auto-layout + the
+inventory. Also score the build against this skill's craft rules (dynamic auto-layout + the
 1200/1600 resize test, component-first, padding/gap ownership) — a violation is a D6 FAIL on its own.
 
 Run D6 only after D1–D5 are clean.
@@ -209,7 +209,7 @@ Add new tentative entries to the proposals file.
 
 **4. Channel A on D7 violation:**
 If a D7 violation is found and the relevant pattern entry is `tentative` (only one confirming screen),
-you MAY run `Skill('figma-playbook') learn --library <key>` inline to find authoritative evidence in the
+you MAY run `Skill('figma-playbook') learn --library <librarySlug>` inline to find authoritative evidence in the
 library's own documentation pages before issuing a definitive finding. A tentative pattern cannot be
 treated as a confirmed convention without corroborating evidence.
 
@@ -290,7 +290,7 @@ gap, leftover default, invisible icon, non-catalog key). This signals the upstre
 
 ## Hard rules
 
-- **READ-ONLY.** Never create/edit/delete nodes. You report; the builder (Sonnet) fixes.
+- **READ-ONLY.** Never create/edit/delete nodes. You report; the builder fixes.
 - PASS only when every D1–D5 check is clean AND D6 is production-level vs the original.
 - Always review **against the original** — never in the abstract.
 - Your findings should skew toward D1-§1H (function/asset meaning), D5 variant correctness, and D6

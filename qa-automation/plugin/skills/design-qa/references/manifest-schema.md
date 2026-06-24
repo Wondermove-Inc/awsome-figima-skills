@@ -76,7 +76,7 @@ i18n resource files, and any project quirks (mock seeding, role enum, modal rout
   the user), persist, then review.
 - **Manifest exists → load + review.** After the run, **merge** new findings into the manifest:
   add newly-mapped screens, mark previously-recorded gaps RESOLVED when the user confirms them
-  defined, append discovered convention homes. Never overwrite the whole file. (Same rule as the
-  global CLAUDE.md "Project Knowledge" merge policy.)
+  defined, append discovered convention homes. Never overwrite the whole file; merge project
+  knowledge additively.
 - Seed only **validated** data. An unmapped screen stays out of `screens[]` (left for init to
   fill) rather than being invented.

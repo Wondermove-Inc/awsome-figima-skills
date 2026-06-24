@@ -12,7 +12,7 @@
 
 ## What this is
 
-The `<sot>/rebuild/<screenId>-inventory.json` file is the **single source of truth** for completeness. Every completeness check — from the builder's self-review to the Opus gate — reduces to one question per element: **did this inventory entry survive into the built screen, rendered and visible?**
+The `<sot>/rebuild/<screenId>-inventory.json` file is the **single source of truth** for completeness. Every completeness check — from the builder's self-review to the advanced-model gate — reduces to one question per element: **did this inventory entry survive into the built screen, rendered and visible?**
 
 This design is deliberate. Every past miss on this project (clone-of-original components, missing leading icons, excess chevrons, footer overflow, dropped logo, dropped back-row) was an original element that was never enumerated. Named per-category checks are emergent from inventory coverage, never special-cased prose. If the inventory is exhaustive, exhaustive coverage is sufficient.
 

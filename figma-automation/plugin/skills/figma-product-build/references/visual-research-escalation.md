@@ -7,7 +7,7 @@ avatar, Lottie asset, or common-pattern example before dispatch or during a buil
 
 A screen whose layout is a well-known pattern — receipt/price-summary, empty state, list row,
 confirmation, payment — is **not dispatched** until a reference exists:
-a cache hit in `design-system/_build-cache/ref-library/<pattern>/` or a fresh researcher run, AND the
+a cache hit in the `figma-playbook` global reference memory (`ref-<pattern>-...`) or a fresh researcher run, AND the
 curated ref is staged on `🔖 References` with its analysis as an adjacent caption. A ref without
 analysis is half a ref. The gate blocks dispatch like L2 blocks L3 — not advisory. Front-load:
 enumerate all common patterns at spec/foundation time, fetch in one batched run, reuse across the
@@ -17,10 +17,9 @@ build.
 
 `visual-researcher` is token-heavy because image tokens and browsing dominate. Before dispatch:
 
-1. **Cache-first / reuse.** Common patterns recur across screens and projects. Keep a persistent
-   reference library (`design-system/_build-cache/ref-library/<pattern>/` + the cross-project KB)
-   with each ref's image and analysis. Reuse before researching; only fetch what is genuinely missing
-   or stale.
+1. **Cache-first / reuse.** Common patterns recur across screens and projects. Keep persistent
+   reference entries in the `figma-playbook` global store with each ref's source, local artifact path,
+   and transfer analysis. Reuse before researching; only fetch what is genuinely missing or stale.
 2. **Front-load in one batched pass.** At foundation/spec, enumerate every common pattern the product
    will render and fetch them in a single visual-researcher run with multiple `requestId`s.
 3. **Bound the request.** Ask for about three candidates, two or three named exemplar screens, saved

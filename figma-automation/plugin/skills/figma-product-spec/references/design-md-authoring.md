@@ -73,7 +73,7 @@ per screen:
 Guidance — these are **decisions, not pixels.** Each field is one choice that is cheap to state here
 and expensive to recover from at build time (a wrong archetype = a section rebuilt; a missed asset = a
 build-time STOP). Leave exact spacing, variant micro-choices, and visual polish to the builder;
-over-specifying craft here just duplicates `figma-design-patterns` and gets stale.
+over-specifying craft here just duplicates the build skill's local craft rules and gets stale.
 
 **Structural fields (from `prd-analysis.json` + `design-language.md`):**
 

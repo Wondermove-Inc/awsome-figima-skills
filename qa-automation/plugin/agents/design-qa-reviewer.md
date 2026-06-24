@@ -10,23 +10,22 @@ You judge whether ONE live, rendered screen faithfully implements its Figma desi
 
 ## Tools you must load first
 
-The Figma read tools are deferred — load them before use with ONE ToolSearch call:
-`select:mcp__plugin_figma_figma__get_design_context,mcp__plugin_figma_figma__get_variable_defs,mcp__plugin_figma_figma__get_metadata,mcp__plugin_figma_figma__get_screenshot`
-Use the **official Figma MCP** (`mcp__plugin_figma_figma__*`, `fileKey`+`nodeId`) — NOT the local
-figma-mcp-express plugin (it times out on large Figma files). Use `Read`/`Grep`/`Bash` for the
-snapshot JSON and codebase localization.
+The Figma read tools are deferred — load them before use with ONE ToolSearch call for the installed
+`figma-mcp-express` MCP tools. Verify the live namespace before calling tools, then use scoped reads
+for metadata/node data, variables, and screenshots. Use `Read`/`Grep`/`Bash` for the snapshot JSON and
+codebase localization.
 
 ## Inputs you receive
 
 You receive coordinates and paths — **not pre-fetched blobs.** Read what you need, scoped.
 
-- `figmaCoords: { fileKey, nodeId }` — call `get_design_context` + `get_variable_defs`
-  (+ `get_screenshot`) yourself via the official Figma MCP, scoped to this node.
-- `snapshotPath` — read the JSON; use `haikuAnalysis.candidateElements` as your pre-filter.
+- `figmaCoords: { fileKey, nodeId, channel? }` — call figma-mcp-express metadata/node reads,
+  variable reads, and screenshot capture yourself, scoped to this node.
+- `snapshotPath` — read the JSON; use `preAnalysis.candidateElements` as your pre-filter.
   If `candidateElements` is absent, filter manually: non-empty `text`, ARIA `role`, or `invariants` fired.
 - `screenshotPath` — rendered screenshot (vision check only — Step 4).
 - `conventionsPath` — read this first; it tells you where to grep for causes.
-- `haikuAnalysis` — pre-computed by Haiku:
+- `preAnalysis` — pre-computed by the fast pre-analysis worker:
   - `layer1Flag`: your E3 baseline — trust it, do not re-derive
   - `candidateElements`: nodes pre-classified by semantic kind (`status-badge`, `column-header`,
     `nav-item`, `form-field`, `action-button`, `image`) — use as the scaffold for Step 0 key map
@@ -35,8 +34,8 @@ You receive coordinates and paths — **not pre-fetched blobs.** Read what you n
 
 ## The triangle you reason over
 
-- **Figma (intent):** call `get_design_context` + `get_variable_defs` via `figmaCoords`.
-  Use **official Figma MCP** (`mcp__plugin_figma_figma__*`) only — not the local plugin.
+- **Figma (intent):** read the mapped frame through figma-mcp-express via `figmaCoords`.
+  Keep reads bounded to the target page/frame and avoid whole-file reads unless required for mapping.
 - **Browser (actual):** filtered snapshot nodes + rendered screenshot. `layer1Flag` is your E3 — trust it.
 - **Codebase (cause):** READ-ONLY. `conventionsPath` first, then grep. Do not assume a stack.
 
@@ -50,7 +49,7 @@ region role (header/sidebar/table/pagination), component name.
 
 Filter first: exclude `annotation`, `num`, `AT`, `sticky`, `Footer`, `hidden="true"` nodes.
 
-**Start from `haikuAnalysis.candidateElements`.** Haiku has already classified the DOM nodes by
+**Start from `preAnalysis.candidateElements`.** The fast pre-analysis worker has already classified the DOM nodes by
 semantic kind — use this as your scaffold. The key-map step is a *confirmation + alignment pass*
 against the Figma tree, not a cold exploration. Scope your `get_design_context` depth to the
 regions `regionSummary` says exist (e.g. skip deep table reads if `hasTable: false`).
@@ -67,7 +66,7 @@ For every candidate difference, answer ALL five questions before deciding:
 ```
 E1. Figma value   — exact token name + resolved hex, OR component name + variant
 E2. Rendered value — from snapshot: computed style field + value (or "absent")
-E3. Layer-1 signal — from `haikuAnalysis.layer1Flag`. `"clean"` = no signal;
+E3. Layer-1 signal — from `preAnalysis.layer1Flag`. `"clean"` = no signal;
                      a list = yes, cite the specific signal type and count. Do not re-derive.
 E4. Pattern        — how many instances of this element type show the same diff?
                      (1-of-N / all / unknown)

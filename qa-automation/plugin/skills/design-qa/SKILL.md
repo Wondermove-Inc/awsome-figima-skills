@@ -19,15 +19,15 @@ agent internalizes the full evidence-collection + decision-tree; this skill does
 
 ## Operational rules (non-negotiable — validated empirically)
 
-- **Figma reads via the official Figma MCP** (`mcp__plugin_figma_figma__*`, `fileKey`+`nodeId`):
-  `get_metadata` (enumerate), `get_design_context` (name+position tree), `get_variable_defs`
-  (tokens), `get_screenshot`. The local figma-mcp-express plugin can time out on large multi-page
-  Figma files — only `list_channels` responds. Do not use it for these reads.
+- **Figma reads via figma-mcp-express** (the default installed MCP server): verify the live namespace
+  with tool discovery, then use scoped reads such as metadata/node reads, variable reads, and screenshot
+  capture against the mapped frame. Keep reads bounded to the manifest's page/frame node; never pull an
+  entire large file when a frame-scoped read is enough.
 - **Browser via LOCAL Playwright** (`<design-qa-skill-dir>/scripts/design_snapshot.py`,
   where `<design-qa-skill-dir>` is the installed skill directory shown in Codex's available-skills
   list. The script imports its sibling `dom_snapshot.py`; both ship with this skill). Requires Playwright in the
   active Python env: `pip install playwright && playwright install chromium` (optional `python-dotenv`
-  for env-based login). A remote browser extension (claude-in-chrome) may control a Chrome on a
+  for env-based login). A remote browser extension may control a Chrome on a
   different host that cannot reach the local dev server — confirm the snapshot's `title`/`url` match
   the app under review.
 - **Locale alignment is a precondition, not a nicety:** align the app's i18n language to the
@@ -86,19 +86,19 @@ For each mapped screen (screens proceed in parallel — screen B captures while 
    Reach (locale/role/auth/viewport) is applied from the manifest automatically.
    (Ad-hoc flags `--viewport/--locale/--set-storage` still work for one-off captures.)
 2. **L1 pre-analysis (fast worker tier):** Pass `snap.json["invariants"]` + `snap.json["nodes"]` — no Figma
-   reads, no judgment. The worker outputs `haikuAnalysis`:
+   reads, no judgment. The worker outputs `preAnalysis`:
    - `layer1Flag`: `"clean"` | list of fired signals (`"truncated[N]"`, `"offscreen[N]"`, `"zeroSize[N]"`)
    - `candidateElements`: filtered nodes keyed by guessed semantic kind
      (`status-badge`, `column-header`, `nav-item`, `form-field`, `action-button`, `image`)
    - `regionSummary`: `{ hasTable, hasBadges, hasNav, hasForm, badgeCount, tableRowCount }`
    This pre-classification is cheap here and makes the reviewer's key-map step a confirmation pass,
    not an exploratory one.
-3. Dispatch **`design-qa-reviewer`** (Sonnet) with coordinates + paths — not pre-fetched blobs:
-   - `figmaCoords: { fileKey, nodeId }` — reviewer reads Figma directly, scoped to its task
+3. Dispatch Codex agent **`design_qa_reviewer`** (less advanced model / Sonnet tier) with coordinates + paths — not pre-fetched blobs:
+   - `figmaCoords: { fileKey, nodeId, channel? }` — reviewer reads Figma directly through figma-mcp-express, scoped to its task
    - `snapshotPath: .tmp/design-qa/<screen>.snap.json`
    - `screenshotPath: .tmp/design-qa/<screen>.png`
    - `conventionsPath: design-qa/<slug>/conventions.md`
-   - `haikuAnalysis` from step 2 — reviewer uses `candidateElements` as key-map scaffold
+   - `preAnalysis` from step 2 — reviewer uses `candidateElements` as key-map scaffold
    The reviewer is the only PASS authority; do not self-approve.
 
 *Exit criteria:* each screen has a reviewer verdict with a non-trivial key map; no Layer-1 harm
@@ -115,11 +115,12 @@ signal is left unexplained.
   family or component import, run one synthesis pass (strongest available reasoning tier) over all
   FAIL findings to identify the systemic root cause (`file:line`, theme variable family, component
   import gap). Skip if ≤2 FAIL.
-- Report: a coverage matrix (every mapped screen + figma-only/app-only/STATIC gaps), per-screen
-  PASS/FAIL, and each drift as `{layer, severity, where, figmaValue, renderedValue, why,
-  file:line, fix}`. Output as raw JSON to `reports/design_qa_<date>.json`. Note:
-  `scripts/generate_report.py` is the behavioral-QA report tool (`tc_id`-keyed) and is
-  **incompatible** with design-qa's `screen`-keyed findings — do not use it here.
+- Report: write each reviewer verdict to `.tmp/design-qa/<screen>.review.json`, then generate the
+  screen-keyed report:
+  `python "<design-qa-skill-dir>/scripts/generate_report.py" --screen-map design-qa/<slug>/screen-map.json --out reports/design_qa_<date>.json .tmp/design-qa/*.review.json`.
+  The report contains a coverage matrix (mapped screens + figma-only/app-only/STATIC gaps),
+  per-screen PASS/FAIL, and each drift as `{layer, severity, where, figmaValue, renderedValue, why,
+  file, fix}`. Do not route design-qa findings through behavioral-QA tooling that expects `tc_id`.
 - **Merge back into the manifest:** append newly-mapped screens, mark a recorded gap RESOLVED if
   the user confirms it now defined, add discovered convention homes to `conventions.md`. Never
   clobber the file.

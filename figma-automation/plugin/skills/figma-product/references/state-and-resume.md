@@ -11,7 +11,7 @@ orchestrator. Step skills read it for context but the orchestrator owns the step
   "slug": "toss-onboarding",
   "pipeline": "figma-product",
   "prdPath": "docs/prd/onboarding.md",
-  "library": { "key": "<libraryFileKey>", "url": "https://figma.com/design/..." },
+  "library": { "key": "<libraryFileKey>", "slug": "<library-slug>", "url": "https://figma.com/design/..." },
   "currentStep": 4,
   "steps": {
     "1-prd":        { "status": "done",        "artifacts": ["design/prd-analysis.json", "design/prebuild-product-map.md"], "confirmedAt": "<ts>" },
@@ -58,7 +58,7 @@ these before advancing `currentStep`:
 | `2-direction` | `concept.md` written per the contract template; the HTML look-&-feel rendered ≥1 energy + ≥1 trust screen; the adversarial direction check passed (distinctive / purposeful / cohesive / modern-not-trend-chasing / buildable); **the user signed off on the rendered look-&-feel (Gate A)**; winning concept written to the cross-project KB. |
 | `3-foundation` | `foundation.json` validates against `foundation.schema.json`; every major design-language/motion/voice decision traces to a `concept.md` section or library fact; **the signature layer is defined** (motif / semantic-motion built+bound, or a flagged gap); library gaps flagged; `research-sources.md` backs the feasibility claims; pattern-transfer + component-preference rules present. |
 | `4-spec` | `DESIGN.md` passes `npx @google/design.md lint --format json` (no errors); `COPY.md` passes `copy-md.schema.json`; the `COPY.md` `screens` map covers every screen id; **each screen carries its concept.md art-direction fields (creative mode + craft moves)**; all `libraryGaps` in DESIGN.md are marked resolved; visible concrete media needs are either prefetched into the asset manifest or explicitly deferred to the build hook's active fetch; `build-readiness.md` includes a per-screen asset plan, responsive/device behavior, builder acceptance checklist, and risk list. |
-| `5-build` | every entry in `screens[]` has `buildState:"pass"` (Opus `verdict:"PASS"`). |
+| `5-build` | every entry in `screens[]` has `buildState:"pass"` (advanced-model `verdict:"PASS"`). |
 
 ## Resume algorithm
 

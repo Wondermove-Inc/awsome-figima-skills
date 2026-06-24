@@ -7,7 +7,7 @@ the dated taste-scan — and writes back what it learns so the next project is s
 ## It is the existing global store — no new infrastructure
 
 The KB is **not** a new store tree. It **is** the existing `global` store that
-`figma-playbook/scripts/apply.py` already writes: `.claude/memory/` with one `<type>_<name>.md` topic
+`figma-playbook/scripts/apply.py` already writes: `.codex/figma-playbook-memory/` with one `<type>_<name>.md` topic
 file per entry and a `MEMORY.md` index line each. We use a **naming convention** + the existing entry
 types — so the KB is real *today* with zero changes to apply.py.
 
@@ -28,7 +28,7 @@ and project-specific facts in the `project <slug>` store — see "What does NOT 
 ## Read (cache-first, before any live research)
 
 In Phase 1 (Ground), **before** dispatching `visual-researcher` or running a live taste scan:
-1. `grep` `.claude/memory/MEMORY.md` (the index — one line per entry) for `ref-`, `concept-`,
+1. Read or grep `.codex/figma-playbook-memory/MEMORY.md` (the index — one line per entry) for `ref-`, `concept-`,
    `precedent-`, `craft-`, `taste-scan-` lines matching this category / audience / register.
 2. Open the matching topic files and reuse their analyses / decisions — don't re-derive.
 3. Seed (don't copy) the divergence from any `concept-` DNA that worked in a similar register.
@@ -39,7 +39,7 @@ live call (the same cache-first discipline the rest of the pipeline uses).
 ## Write (after Gate A approves) — always through figma-playbook
 
 All KB writes go through `Skill('figma-playbook') apply <proposals.json>` (atomic, flock-safe) with
-`"store": "global"` — never hand-edit `.claude/memory/` files, same rule as every other memory store.
+`"store": "global"` — never hand-edit `.codex/figma-playbook-memory/` files, same rule as every other memory store.
 On direction sign-off, propose:
 - the **winning concept DNA** → `pattern` / `concept-<category>-<slug>`;
 - any **new analyzed references** the project produced → `reference` / `ref-…`

@@ -23,25 +23,26 @@ The original frame is your **content source + visual reference**; the target lib
 - Hard rules
 - Concurrency and import-thread discipline
 
-## STEP 0 — cold start: load skills + memory
+## STEP 0 — cold start: load MCP mechanics + memory
 
-1. `Skill('figma-go')` — discrete-tool mechanics + bounded reads + the `batch` interpreter.
-2. `Skill('figma-design-patterns')` — mandatory before any build: auto-layout on every structural frame,
-   component-first, FILL/HUG/FIXED discipline, semantic layer names. Follow it; don't just load it.
-3. `Skill('frontend-design:frontend-design')` — design-quality judgment (hierarchy, rhythm, anti-slop).
-4. **Index loaded** (from orchestrator's `figma-playbook load`). You have the MEMORY.md index — names +
+1. `Skill('figma-mcp-express')` — tool mechanics, bounded reads, channel handling, and the `batch`
+   interpreter. Verify the live tool namespace before calling tools; do not assume a `-dev` namespace.
+2. Read this skill's local craft references before building: auto-layout on every structural frame,
+   component-first construction, FILL/HUG/FIXED discipline, semantic layer names, hierarchy, rhythm, and
+   anti-slop checks. Follow them; don't treat them as a post-build checklist.
+3. **Index loaded** (from orchestrator's `figma-playbook load`). You have the MEMORY.md index — names +
    one-line descriptions only, no file contents yet. Do NOT read all topic files upfront.
-5. **Load on demand.** As you encounter each element type or decision point in STEP 3, scan the index for
+4. **Load on demand.** As you encounter each element type or decision point in STEP 3, scan the index for
    matching entries and read only those files then. The hook line IS the relevance filter — if the hook
    matches what you're placing, fetch the file.
-6. **Memory miss → live check.** If the index has no matching entry for a decision (no pattern for this
+5. **Memory miss → live check.** If the index has no matching entry for a decision (no pattern for this
    element type), don't guess — go check the library directly (`fetch_library_catalog`, `get_node` on the
    relevant component, `save_screenshots` of a relevant composed frame). If a convention is found, apply it
    AND add it to `memory-proposals.json` as a new tentative entry. Memory is the cache; live Figma is the
    source of truth when the cache misses.
-7. Read your sibling references: `variant-resolution.md`, `live-discovery.md`,
+6. Read your sibling references: `variant-resolution.md`, `live-discovery.md`,
    `references/completeness-floor.md`, `references/original-inventory.md`.
-8. Read your inputs: `channel`, original `frameId`, target `libraryFileKey`, output `pageId`, ledger path,
+7. Read your inputs: `channel`, original `frameId`, target `libraryFileKey`, output `pageId`, ledger path,
    screenshot dir, memory index context.
 
 > **You are a REUSED agent.** Spawned once per screen, kept alive across build + fix rounds. On a review
@@ -93,7 +94,7 @@ hierarchy, weight, composition. Then read the rest from code:
 At run start the orchestrator (or you at STEP 0) fetches the target library catalog:
 ```
 fetch_library_catalog(fileKey=<libraryFileKey>, scope:"all",
-  outPath:<sot>/rebuild/_redesign-cat-<libraryKey>.scratch.json)
+  outPath:<sot>/rebuild/_redesign-cat-<librarySlug>.scratch.json)
 ```
 
 For element-level discovery, follow `live-discovery.md` (role + context + synonyms; visual confirm;
@@ -202,11 +203,11 @@ no-excess, child-fits-parent, raw-value scan, no-left-default-variant, **and (g)
 mechanical floor** (PC2 boxless-control, PC3 destructive-not-red, semantic layer names — no
 `/^Frame \d+/`). These are deterministic; all must be green before you return.
 
-**Run the production-craft self-check (you loaded `figma-design-patterns` at Step 0 — USE it now).**
-Score yourself against the SAME standard the Opus reviewer uses, so it finds nothing you could have
+**Run the production-craft self-check (you loaded this skill's craft rules at Step 0 — USE them now).**
+Score yourself against the SAME standard the advanced-model reviewer uses, so it finds nothing you could have
 caught: walk every region against the D6 Production-Craft enum **PC1–PC8** (defined in
-`review-protocol.md` — don't re-derive it) plus the `figma-design-patterns` CORE RULES + QUICK
-ANTI-PATTERN FLAGS. PC8 (un-componentized repetition) is the #1 maintainability miss and the easiest to
+`review-protocol.md` — don't re-derive it) plus the local craft rules. PC8 (un-componentized repetition)
+is the #1 maintainability miss and the easiest to
 self-rationalize: N≥3 identical rows must be ONE component instanced (library if it exists, else
 `local/<Name>`), never raw copy-paste/clone. A hit you can fix = fix it now; a genuine judgment call =
 record it for the reviewer, never self-bless. Prove each clear with an artifact (a screenshot beside the
@@ -222,7 +223,7 @@ original), not "looks fine".
 > seems redundant — do NOT drop it and write "ADAPTED" / "redesign latitude" / "no slot". ESCALATE:
 > keep the feature if you can, else record it in `escalations[]` with the original element + why you
 > couldn't place it. Feature-loss and feature-excess are both defects; the deviation decision belongs to
-> the Opus reviewer / human.
+> the advanced-model reviewer / human.
 
 ---
 
@@ -271,20 +272,20 @@ original), not "looks fine".
 ```
 
 - **`inventoryDiff`:** the primary completeness proof. Must be clean (0 missing, 0 excess, 0 invisible icons)
-  before the Opus gate runs. If your own diff finds a defect, fix it now.
+  before the advanced-model gate runs. If your own diff finds a defect, fix it now.
 - **`r1Report`:** L2 floor result (all fields green). Read back from live nodes — never claim a binding
   you didn't read back (the classic false-green is "bindings done" while every `boundVariables` is null).
 - **`bindingProof`:** a representative sample of builder-created shells (every distinct token role: surface,
-  border, spacing) — `nodeId` + property + `boundVariable` read back from the live node. The Opus reviewer
+  border, spacing) — `nodeId` + property + `boundVariable` read back from the live node. The advanced-model reviewer
   spot-checks this instead of bouncing for "unverifiable D2".
-- **`d6`:** your honest read of where the craft is weakest vs the original. This is the Opus gate's domain
+- **`d6`:** your honest read of where the craft is weakest vs the original. This is the advanced-model gate's domain
   (subtle hierarchy, pattern consistency, rhythm) — be honest so the gate can sharpen it.
 - **`importThreadHung`:** `true` if you hit a genuine non-self-clearing import hang; record blocked keys in
   the ledger so the orchestrator can drain the tail after a restart.
 
-> **Opus is a BAR-RAISER, not your safety net.** Submit ONLY when the screen is — by your own evidence
+> **The advanced-model reviewer is a BAR-RAISER, not your safety net.** Submit ONLY when the screen is — by your own evidence
 > (inventoryDiff=clean, r1Report=all-green, bindingProof read back) — genuinely complete and correct.
-> Opus raises the craft bar (hierarchy, pattern consistency, D6). It is NOT the backstop for a missing
+> The advanced-model reviewer raises the craft bar (hierarchy, pattern consistency, D6). It is NOT the backstop for a missing
 > close button or a dropped filter icon. If the reviewer catches a mechanical/content/feature defect, YOU
 > failed your own bar. Never ship "good enough, the review will catch the rest."
 

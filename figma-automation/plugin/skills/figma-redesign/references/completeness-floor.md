@@ -1,9 +1,9 @@
 # R1 — Mechanical Pre-Gate (L2, inventory-driven, deterministic, ~free)
 
 R1 answers exactly **one** question: **is the build mechanically complete per the original inventory?**
-It is NOT a craft gate — that belongs to the Opus craft verifier (L3). R1 is the cheap, deterministic
+It is NOT a craft gate — that belongs to the advanced-model craft verifier (L3). R1 is the cheap, deterministic
 precondition the L3 verifiers must never have to revisit. At L3 these same checks are re-run
-INDEPENDENTLY by the **figma-structural-verifier** (Sonnet) — so this floor is the builder's self-check,
+INDEPENDENTLY by the **figma-structural-verifier** (less advanced model / Sonnet tier) — so this floor is the builder's self-check,
 and the structural verifier is its independent backstop.
 
 > **The gate is the independent verifier, not your self-report.** A floor administered BY the builder ON
@@ -43,7 +43,7 @@ Every remote instance's `mainComponent.key` must be present in the target catalo
   keeping the original's component — the `assembly` rung is almost always available and always preferred).
 - A clone-of-original → **VIOLATION.** The original file's library often has same-named components with
   DIFFERENT keys, so a clone passes every other check yet is not a target build (the LOOK-ALIKE TRAP —
-  canonical in `live-discovery.md`). This is the single most expensive miss: it survives a full Opus
+  canonical in `live-discovery.md`). This is the single most expensive miss: it survives a full advanced-model
   review because it matches the original perfectly.
 
 **Recurse into top-level organism instances** — a non-target organism key contaminates its whole subtree.
@@ -64,7 +64,7 @@ role maps to a library kind — **button / text-button, input, select/dropdown, 
 checkbox/toggle, icon, modal chrome** — assert it is an INSTANCE of a target component, not a hand-built
 FRAME+TEXT(+icon) shell. A raw assembly faking one of these kinds = VIOLATION even though it has no remote
 key to fail check (a). (Typical miss: a "back" row built as a raw frame of arrow-icon + TEXT when the
-library has a text-button set with a left-icon+label variant — see library memory `pattern_back-nav-text-button`.) This is CLAUDE.md's "Library component audit" (REQUIRED kinds must be INSTANCE)
+library has a text-button set with a left-icon+label variant — see library memory `pattern_back-nav-text-button`.) This is the required library component audit
 ported into the redesign floor. Structural shells with NO library equivalent (a section wrapper, a column
 container) are the only legitimate raw frames. Report
 `componentFirstAudit: [{nodeId, role, isInstance, libraryKindExists, verdict}]`.
@@ -83,7 +83,7 @@ which means a designer can't edit one row and have all update. Report
 ### (b) Inventory coverage: every inventoried element is present
 
 `coverage = (elements with a built instance or explicit GAP) / (total inventory entries)` must be N/N.
-A dropped or collapsed element surfaces here — before Opus has to notice it by eye. Nav rows, chrome
+A dropped or collapsed element surfaces here — before the advanced-model verifier has to notice it by eye. Nav rows, chrome
 items (header toggle, back-button, footer, scrollbar), and every icon are all in the inventory and
 all count.
 
@@ -134,13 +134,13 @@ Two sub-checks:
    For every icon/leaf instance assert: (i) a non-empty VECTOR/BOOLEAN child exists, (ii) that child
    is `visible:true`, (iii) its fill contrasts the nearest surface fill (no dark-on-dark / white-on-white —
    e.g. a near-black toolbar icon on a dark toolbar is present but invisible). This is a structural fact
-   (child / visible / fill-vs-bg), not judgment — so it belongs in the floor, not the Opus gate.
+   (child / visible / fill-vs-bg), not judgment — so it belongs in the floor, not the advanced-model gate.
 
 ### (g) Production-craft mechanical floor — the scriptable members of the D6 PC enum
 
-The craft checks a script CAN run, pulled forward so the Opus gate never spends a round on them (the
+The craft checks a script CAN run, pulled forward so the advanced-model gate never spends a round on them (the
 judgment members — PC4 icon chrome, PC5 separator, PC7 rhythm — stay D6). Driven by the
-`figma-design-patterns` CORE RULES + QUICK ANTI-PATTERN FLAGS you loaded at Step 0.
+local craft rules + quick anti-pattern flags loaded at Step 0.
 
 1. **PC2 — boxless control.** Every INSTANCE whose inventory role is input / select / dropdown / field
    must have a visible field boundary: a bound stroke OR a non-transparent surface fill (or be a known
@@ -149,27 +149,27 @@ judgment members — PC4 icon chrome, PC5 separator, PC7 rhythm — stay D6). Dr
    the error/destructive color token (not a neutral token, not raw). Neutral trash = VIOLATION. The red
    must be on the GLYPH — a filled red background box instead of a glyph is PC4 (caught at D6).
    See library memory: `pattern_destructive-icon-ghost-glyph`.
-3. **Semantic layer names (figma-design-patterns CORE RULE 5).** `scan_nodes_by_types(frame,["FRAME"])`;
+3. **Semantic layer names.** `scan_nodes_by_types(frame,["FRAME"])`;
    any name matching `/^Frame \d+/`, `/^Group \d+/`, or `/^Rectangle \d+/` = VIOLATION. A finished frame
    has ZERO auto-generated names — `batch_rename_nodes` to semantic roles before R1 passes.
-4. **Touch-target audit (figma-design-patterns CORE RULE 13) — mobile/tablet only.** From the same
+4. **Touch-target audit — mobile/tablet only.** From the same
    `get_nodes_info` pass, for every node whose inventory `role` is interactive — **button, text-button,
    icon-button, nav-row, tab, chip, dropdown/select, input, pagination-button, toggle/checkbox, list-row
    with a tap action** — assert `min(bounds.width, bounds.height) ≥ 44` (iOS) / `≥ 48` (Android per the
    platform). The tappable bound is the node's own frame (an instance's padded hit-area), NOT the glyph
    inside it — a 24px icon inside a 44px button passes; a 40px bare icon-container fails. This is the
-   structural sibling of CORE RULE 13, pulled forward so Opus never spends a round measuring pixels.
+   structural sibling of the craft rule, pulled forward so the advanced-model verifier never spends a round measuring pixels.
    Report `touchTargetViolations: [{nodeId, role, w, h}]`. Any entry = FIX (grow the frame / add padding).
    Skip on `desktop-*` / pointer platforms (denser is fine there).
-5. **Accent-budget count (figma-design-patterns Stop-Flag "saturated accent flooded").** Count the
+5. **Accent-budget count ("saturated accent flooded").** Count the
    nodes whose `fills`/`strokes` bind the **accent/primary/brand** color token (the one rationed for the
    primary action). Cluster them by role — *primary-action*, *active-nav/tab*, *urgent-status*,
    *filter/chip-active*, *link*, *unread-dot*, *badge*, *decoration*. **More than 2 distinct role-clusters
-   wearing the accent on one screen = `accentBudgetExceeded` (advisory flag, not an auto-fail — Opus
+   wearing the accent on one screen = `accentBudgetExceeded` (advisory flag, not an auto-fail — the advanced-model verifier
    confirms which uses are load-bearing vs. noise).** This catches the "everything is orange, so nothing
    is" failure mechanically instead of by eye. Report `accentUses: [{nodeId, role, token}]` +
    `accentRoleClusters: N`.
-6. **Icon-family consistency (figma-design-patterns CORE RULE 10 sibling).** Collect every icon INSTANCE
+6. **Icon-family consistency.** Collect every icon INSTANCE
    (`role` ∈ icon / icon-button glyph). Assert they resolve to **one** icon system — a single
    component-set or a single key namespace (e.g. all `Icon24/*`, one stroke weight / one grid size).
    Mixed families or mixed sizes on one screen (thin-outline header icons + filled tab icons +
@@ -201,7 +201,7 @@ just one technique; the gate is the four conditions above. The reviewer owns thi
 
 ---
 
-## Runnable recipe (Sonnet, inside R0)
+## Runnable recipe (less advanced model / Sonnet tier, inside R0)
 
 ```
 # Load target catalog once:
@@ -296,11 +296,11 @@ r1Report: {
 All zeros, coverage N/N, every `inTargetCatalog:false` with a sound `gapJustification` = **green**.
 `touchTargetViolations` / `iconFamilyMismatch` non-empty = FIX. `accentBudgetExceeded` /
 `squintHierarchyOk:false` are advisory — fix forward if the builder agrees, else flag for the L3 gate.
-Any violation = **FIX FORWARD, do not request Opus review.**
+Any violation = **FIX FORWARD, do not request advanced-model review.**
 
 ---
 
-## What R1 does NOT catch (Opus L3 owns these)
+## What R1 does NOT catch (advanced-model L3 owns these)
 
 - A **wrong-but-present** icon (function drift — feedback→share looks right mechanically).
 - Feature **behavior** loss (a present button wired to the wrong meaning).
@@ -312,4 +312,4 @@ Broken-component-set workaround (preserved from prior art): when `get_node`/`get
 `get_nodes_info` on raw types (TEXT/RECT/FRAME/VECTOR) — they never throw. Skip broken INSTANCE ids.
 Container fills that also throw = "측정 불가"; never estimate.
 
-R1 first (cheap, deterministic), Opus second (judgment, rare). They are complementary layers, not substitutes.
+R1 first (cheap, deterministic), advanced-model review second (judgment, rare). They are complementary layers, not substitutes.

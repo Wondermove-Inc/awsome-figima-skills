@@ -31,7 +31,7 @@ library and gates completeness by diffing the **original frame**. Here there is 
   Step 3  figma-product-foundation   concept.md → design system: tokens + EFFECT PALETTE + signature
                                       + library map; assets/refs staged INTO the Figma file            [GATE: completeness]
   Step 4  figma-product-spec         foundation + concept.md → DESIGN.md + COPY.md (schema-checked)    [GATE: coverage + faithful]
-  Step 5  figma-product-build        ① CANON co-designed w/ user BY HAND → ② rest fan out to agents   [GATE: Sonnet L3 PASS]
+  Step 5  figma-product-build        ① CANON co-designed w/ user BY HAND → ② rest fan out to agents   [GATE: less-advanced / Sonnet-tier L3 PASS]
 
   Visual research lane              PRD hook: visual-needs census → Direction hook: references + taste scan
                                     → Foundation hook: stage assets/refs INTO the Figma file → Build hook: active fetch
@@ -41,7 +41,7 @@ library and gates completeness by diffing the **original frame**. Here there is 
 > Step 2 on the *concept* (a cheap HTML feel-check is enough there). But the **production aesthetic and
 > the user's real hands-on sign-off happen at the START of Step 5** — the orchestrator co-designs the
 > 1–2 canon screens directly in Figma WITH the user (after the spec), THEN only the *rest* fan out to
-> `figma-builder` (Opus) + the two Sonnet verifiers. **Two-sided bar — both are FAILs:** (a) **flat /
+> `figma-builder` (advanced model / Opus tier) + the two less-advanced / Sonnet-tier verifiers. **Two-sided bar — both are FAILs:** (a) **flat /
 > AI just-assembling stock blocks** (under-crafted), and (b) **over-decoration / advanced features piled
 > on for show** (over-crafted). SUCCESS = Figma's advanced capabilities (glass, blur, depth, effects,
 > motion, real imagery) deployed **purposefully — in the right places, in the right amount, fit to the
@@ -64,7 +64,7 @@ surfaces gaps; resolve them with the user; only then advance. These are hard gat
 | 2 | **GATE A — direction sign-off (the one human creative gate).** The diverge→critique→converge produced a `concept.md`, and the HTML look-&-feel proved it on ≥1 energy + ≥1 trust screen. The adversarial check (run BEFORE presenting): is the direction **distinctive** (survives the squint test — not "any competitor"), **purposeful** (every signature move answers "what does this mean here?"), **cohesive** (energy & trust read as one product), **modern without trend-chasing** (adopted aesthetics serve register + legibility), and **buildable** in the target kit? A generic / decorative / flat direction is REJECTED and re-diverged HERE — this is where the "too weak / dull / generic" class is killed, before any token or screen exists. THEN the **user signs off on the rendered look-&-feel** ("이런 느낌"). On approve: `concept.md` finalized, winning concept written to the KB. |
 | 3 | **Foundation-completeness review (Design System):** the dossier faithfully systematizes the **signed-off `concept.md`** — every section present (design-language, interaction-motion, haptics, brand-voice, library-mapping, **the bespoke signature layer**) and each decision traceable to `concept.md` or evidence; library gaps flagged; platform-gated (no hover/drag-drop on touch). `foundation.json` validates. *(Foundation has no human gate — the direction was signed off at Gate A.)* |
 | 4 | **Spec coverage AND faithful-application review.** (a) *Coverage:* `DESIGN.md` lints + `COPY.md` schema-validates; every screen+state from the (now-complete) Step-1 census appears in BOTH `DESIGN.md` layout-intent AND `COPY.md` strings; everything derives from `foundation/` + `concept.md`; library gaps resolved with the user. (b) **Faithful-application review — dispatch an empowered design-director agent to confirm the spec did not FLATTEN the signed-off direction:** does each screen's layout intent carry its `concept.md` `Creative-mode map` + `Craft toolkit per register` (a clear focal point, hierarchy, the signature move where the register calls for it), or did it decay into generic boilerplate that builds flat? Weak/flattened application is reworked HERE. *(This does not re-judge the direction itself — that was signed off at Gate A — only whether the spec faithfully carries it.)* (The `spec-build-review.md` Step-4.5 plan-completeness gate is the final backstop right before build.) |
-| 5 | Every screen reaches Opus `verdict:"PASS"` after its L1→L1.5→L2→L3 loop. |
+| 5 | Every screen reaches advanced-model `verdict:"PASS"` after its L1→L1.5→L2→L3 loop. |
 
 If an exit-review surfaces a gap, **stop at that step and resolve it** — never paper over a Step-1
 omission by guessing in Step 5. The front gates exist so the build is downstream of decisions already
@@ -101,10 +101,11 @@ Run it through hooks inside the existing steps:
 1. **Resolve the project.** Derive/confirm a project `<slug>` (kebab-case, from the PRD title or
    `--project`). `ls design-system/` — reuse an existing slug if it matches, else this run creates
    `design-system/<slug>/` (mirror the manifest shape of an existing `project.json`: `slug`, `name`,
-   `fileKey`, `libraries[]`, `framework`, timestamps). Record the target library (URL or key).
-2. **Load memory once.** `Skill('figma-playbook') load --library <libraryKey> [--project <slug>]`.
+   `fileKey`, `libraries[]`, `framework`, timestamps). Record both the target library API key/URL and
+   a human-readable `librarySlug` for memory paths.
+2. **Load memory once.** `Skill('figma-playbook') load --library <librarySlug> [--project <slug>]`.
    Pass the returned index context down to every step. (First use of a library → also
-   `Skill('figma-playbook') learn --library <libraryKey>` to bootstrap pattern memory.)
+   `Skill('figma-playbook') learn --library <librarySlug>` to bootstrap pattern memory.)
 3. **Initialize / resume state.** Read `<sot>/governance/state.json` if present and resume from the
    first incomplete step; else create it (schema in `references/state-and-resume.md`). Re-invoking
    `/figma product` is always safe — completed steps are not redone.
@@ -114,7 +115,7 @@ Run it through hooks inside the existing steps:
    - `Skill('figma-product-direction')` → `direction/concept.md` + look-&-feel renders → **GATE A: human sign-off**
    - `Skill('figma-product-foundation')` → `foundation/` dossier (systematizes the signed-off `concept.md`)
    - `Skill('figma-product-spec')` → `DESIGN.md` + `COPY.md`
-   - `Skill('figma-product-build')` → built + Opus-passed screens
+   - `Skill('figma-product-build')` → built + advanced-model-passed screens
    After each, update `state.json` (`currentStep`, artifact paths, gate verdict, visual research pack
    paths, pending/resolved visual requests).
 5. **Finish.** On all screens PASS: apply any pending memory proposals
@@ -139,7 +140,8 @@ routes correctly):
   failure mode Step 1 exists to prevent.
 - **UI/UX craft** the PRD doesn't spell out (visual hierarchy, component choice, spacing, empty /
   loading / error-state design, microcopy within the defined voice) is **decided autonomously by
-  the builder** at Step 5 using the foundation + `figma-design-patterns`. PRD silence on craft is a
+  the builder** at Step 5 using the foundation + the local craft rules in `figma-product-build`.
+  PRD silence on craft is a
   mandate to design it well — never license to skip it or stub it.
 
 So the orchestrator never escalates a craft question to the user, and never lets a functional

@@ -312,7 +312,7 @@ def capture(
     Reach is driven by `reach_plan` (from build_reach_plan over a manifest) when given; otherwise
     the explicit flags form an implicit plan (`--locale` seeds the i18next default key for
     back-compat). `auth_seed` (from build_auth_seed) injects a cookie/localStorage credential whose
-    value came from env. `login=True` is a legacy fallback to dom_snapshot's form-login flow.
+    value came from env. `login=True` is a compatibility fallback to dom_snapshot's form-login flow.
     """
     try:
         from playwright.sync_api import sync_playwright
@@ -352,7 +352,7 @@ def capture(
         _apply_storage(ctx, storage)
         page = ctx.new_page()
 
-        if login and base_url:  # legacy fallback — declarative auth_seed is preferred
+        if login and base_url:  # compatibility fallback; declarative auth_seed is preferred
             try:
                 from dom_snapshot import _login_page
 

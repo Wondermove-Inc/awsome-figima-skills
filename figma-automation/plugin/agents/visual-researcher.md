@@ -34,11 +34,8 @@ style keywords, desired qualities, must-have constraints, and avoid list. Asset 
 `type`, `assetKind`, `query`, and `preferredFormat` or `outputFormats`; reference requests also need
 `referenceKind`, `screens`, `minSourceYear` set to 2024 or newer, and `trendFocus`.
 
-When filesystem access is available, run:
-
-```bash
-python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>
-```
+When filesystem access is available, run
+`python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-request.py <request.json>`.
 
 If the request is under-specified, do not browse. Return JSON with `blocked:true`,
 `reason:"insufficient_visual_request_detail"`, and `missingFields` so the builder/orchestrator can
@@ -72,11 +69,8 @@ reissue a better prompt.
 
 ## Output
 
-Validate the final pack:
-
-```bash
-python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-pack.py <pack.json>
-```
+Validate the final pack with
+`python3 <figma-visual-researcher-skill-dir>/scripts/validate-visual-pack.py <pack.json>`.
 
 Then return the JSON pack. If validation cannot run because this is a chat-only environment, still
 follow the contract exactly and say validation was not run in a `notes` field.

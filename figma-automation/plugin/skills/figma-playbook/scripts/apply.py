@@ -6,9 +6,9 @@ Usage:
   python scripts/apply.py <proposals.json> [--dry-run]
 
 Store resolution:
-  global              → .claude/memory/
-  library <slug>      → design-system/<slug>/memory/   (e.g. "hae-dl")
-  project <slug>      → design-system/<slug>/memory/   (e.g. "ccs")
+  global              → .codex/figma-playbook-memory/
+  library <slug>      → design-system/<slug>/memory/   (e.g. "material-design")
+  project <slug>      → design-system/<slug>/memory/   (e.g. "checkout-app")
 
 Proposal JSON schema: see /figma-playbook docs.
 """
@@ -23,9 +23,10 @@ import sys
 def _resolve_repo_root() -> pathlib.Path:
     """Locate the figma-automation repo root that owns the memory stores.
 
-    The stores (`.claude/memory/`, `design-system/<slug>/memory/`) live in the
-    user's repo checkout, NOT next to this script. Derive from the working
-    directory (the repo the user is in), with an explicit override.
+    The stores (`.codex/figma-playbook-memory/`,
+    `design-system/<slug>/memory/`) live in the user's repo checkout, NOT next
+    to this script. Derive from the working directory (the repo the user is
+    in), with an explicit override.
     """
     override = os.environ.get("FIGMA_PLAYBOOK_REPO_ROOT")
     if override:
@@ -55,7 +56,7 @@ _STORE_KEY_RE = re.compile(r'^[a-z0-9][a-z0-9_-]*$')
 
 def store_dir(store: str, store_key: str | None) -> pathlib.Path:
     if store == "global":
-        return REPO_ROOT / ".claude" / "memory"
+        return REPO_ROOT / ".codex" / "figma-playbook-memory"
     if store in ("library", "project"):
         if not store_key:
             raise ValueError(f"storeKey required for {store} store")

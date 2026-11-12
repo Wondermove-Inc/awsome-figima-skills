@@ -52,3 +52,7 @@ design-system/
 figma-automation/design-system/
 qa-automation/design-qa/
 qa-automation/knowledge/
+
+# Official Figma skills fetched by scripts/sync-figma-official-skills.sh
+# (Figma Developer Terms, not redistributed from this repo).
+vendor/figma-official-skills/

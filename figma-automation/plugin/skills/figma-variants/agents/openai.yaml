@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Variants"
+  short_description: "Authors and manages component sets, variant axes, and component properties."
+  default_prompt: "Use $figma-variants to build or clean up a Figma component set: plan the variant matrix, pick the right backend, author or manage the variants, and verify the set."

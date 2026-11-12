@@ -20,6 +20,16 @@ qa-automation/
 
 .claude-plugin/
   marketplace.json     Claude Code marketplace entries for the same plugin folders
+
+scripts/
+  install.sh                      Codex plugin + agent installer
+  sync-figma-official-skills.sh   Fetches Figma's official skills into vendor/ (git-ignored)
+
+docs/
+  figma-official-skills.md        Catalog of Figma's official MCP skills and install paths
+  figma-mcp-landscape-2026.md     Backend comparison and 2026 timeline
+
+vendor/figma-official-skills/     Local copy of Figma's skills (not tracked)
 ```
 
 The repository intentionally tracks only source, plugin packages, and reusable

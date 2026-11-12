@@ -90,3 +90,11 @@ After committing, make the composition match the original's inventory entry:
 - Probe instance left on the canvas (debris not deleted).
 - "Used the right variant" claimed in the ledger with no record of candidates compared.
 - Declared "library-forced" or GAP without probing the override (`TEST-THE-OVERRIDE` — see builder-brief.md).
+
+---
+
+## When the library genuinely lacks the variant
+
+A confirmed GAP in a component set the project owns (local set, not a subscribed library) is a job
+for the `figma-variants` skill: it adds the missing axis value or property and re-grids the set.
+Do not fake the variant with detached instances or manual overrides inside a redesign build.

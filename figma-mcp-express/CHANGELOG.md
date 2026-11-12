@@ -6,6 +6,138 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.8.1] — 2026-08-06
+
+### Documentation
+
+- **Skill craft/mechanics hardened from a real deck build** (figma-automation `/figma-slides`
+  retrospective):
+  - `figma-design-patterns/references/auto-layout.md` — clarified when layout sizing can be
+    supplied to `create_frame` and when an existing child needs a follow-up `resize_nodes`
+    call, with fixes for ragged card rows and overflowing chart bars.
+  - `figma-design-patterns/references/visual-craft.md` — added "depth must vary by hierarchy":
+    one elevation tier applied uniformly is monotone, not restraint; the focal element must sit
+    forward even in a flat aesthetic.
+  - `figma-mcp-express/references/gotchas.md` — documented SECTION local-origin coordinates and
+    the build-into-the-section-from-the-start convention (reparent only as recovery).
+  - `figma-mcp-express/references/mcp-known-bugs.md` — tracked standalone currency strings
+    that collide with the batch `$N.path` grammar (#82), with profile-aware workarounds.
+
+### Changed
+
+- **License simplified to standard MIT with original upstream attribution.** Removed the
+  Commons Clause restriction, restored GETHOPP LTD's original copyright notice, preserved
+  required downstream notices, and included the MIT license in npm and plugin release
+  artifacts. Commercial use is now expressly permitted by the repository license.
+- **figma-design-patterns: folded in two universal craft principles surfaced by a real build.**
+  (1) **Contrast/readability** — the color ladder now states the bright foreground token is the DEFAULT for
+  all primary content; muted/dim is for secondary lines only, and contrast is never used to encode emphasis
+  (`references/visual-craft.md`, in the color ladder). (2) **Leading-chip alignment** — a chip/icon
+  against multi-line text top-aligns (`counterAxisAlignItems:"MIN"`) so it meets the first line, vs the
+  single-line control+label CENTER rule (`references/auto-layout.md`). Slide-specific craft (px scale floor,
+  action-title length, visualization-over-text) stays in the `figma-slides` skill, which now cross-links here.
+
+## [2.8.0] — 2026-07-11
+
+### Added
+
+- **Remote Follower mode.** `--mode remote-follower` now serves the existing MCP tools and prompts at
+  a loopback-only Streamable HTTP `/mcp` endpoint while forwarding `/rpc`, `/channels`, and `/ping`
+  through a dedicated Tailscale HTTPS leader path.
+- **Remote-mode supervisor contract validation.** `--leader-url`, `--outbound-proxy`, and
+  `--mcp-listen` are validated before startup side effects, rejecting non-`.ts.net` leaders,
+  non-loopback proxies/listeners, credentials, fragments, queries, and unexpected paths.
+- **Remote Follower regression coverage.** Added unit, Streamable HTTP MCP, race, and tagged binary
+  E2E coverage for proxy isolation, read/write forwarding, gzip responses, schema validation before
+  forwarding, response-loss no-retry behavior, shutdown, and log/error redaction.
+
+### Security
+
+- **Follower transport hardening.** Remote follower HTTP traffic uses a dedicated client/proxy,
+  preserves default TLS verification, disables redirects, bounds response bodies, checks non-2xx
+  statuses before decoding, and avoids logging endpoint URLs, proxy URLs, params, node/channel IDs,
+  file metadata, request bodies, and upstream response bodies.
+
+## [2.7.1] — 2026-06-25
+
+### Changed
+
+- **Codex and Claude marketplace bundles are now self-contained.** The marketplace source now points
+  at `plugins/figma-mcp-express`, which contains real `.codex-plugin`, `.claude-plugin`, `.mcp.json`,
+  `hooks`, and `skills` files instead of symlinks. This fixes installs that reported
+  `installed, enabled` while leaving the Codex plugin cache empty and no bundled MCP server loaded.
+- **Codex plugin manifest aligned with current validation.** UI metadata now lives under
+  `interface`, default hook discovery relies on `hooks/hooks.json`, and the bundle is validated with
+  a regression test that rejects symlink-only or stale marketplace copies.
+
+### Fixed
+
+- **Claude plugin hook duplication.** Removed the explicit `hooks:"./hooks/hooks.json"` manifest
+  entry so Claude's standard hook auto-discovery does not load the same file twice after marketplace
+  install.
+- **Skill-gate marker path on macOS.** The `figma-mcp-express` skill now writes its load marker to
+  the same temp directory the PreToolUse hook reads (`$TMPDIR` on macOS) and always writes a
+  `default` fallback marker for hosts that do not propagate a session id into skill shell commands.
+
+## [2.7.0] — 2026-06-24
+
+### Added
+
+- **`create_instance` accepts `componentKey` without a local `componentId`.** When only a published
+  library `componentKey` is given, the plugin auto-imports the source component (or component set)
+  before instancing. `componentId` is now optional; supplying either is sufficient and the Go schema
+  validates that at least one is present.
+- **`set_auto_layout` works on components and component sets, not just frames.** The node-type guard
+  now accepts `FRAME`, `COMPONENT`, and `COMPONENT_SET`.
+- **`update_variable(removeOverrideForMode)` and `update_variable_collection(removeOverridesForVariableId)`.**
+  Clear an extended-mode variable override, or clear a variable's overrides from an extended
+  collection. Both reject empty ids at the Go schema boundary before mutating.
+- **`create_frame` absolute positioning inside auto-layout parents.** When
+  `layoutPositioning:"ABSOLUTE"` is provided, the plugin re-applies the requested `x`/`y` after
+  appending to the parent, so Figma's auto-layout flow insertion cannot silently reset the child to
+  `(0,0)`.
+- **Tier-0 capability seed (server instructions).** The server now advertises a compact
+  (~320-token) capability map via the MCP `instructions` field, auto-injected once per session by
+  any client. It teaches the discovery flow (`search_batch_ops(category)` → `get_batch_op_spec` →
+  `batch`) and lists, by intent, the advanced capabilities an AI would otherwise never think to use
+  (glass/noise/texture effects, GRID/min-max layout, per-subtree variable modes, boolean ops,
+  prototype reactions/fixed-chrome, real media, etc.). Schemas stay on-demand — this is awareness
+  only. Backed by per-op intent metadata in `internal/capability_seed.go` (SSOT) with a test that
+  every op is categorized and every novel op sits in a featured (teaser-bearing) category.
+- **figma-design-patterns: `references/visual-craft.md`.** A new design-craft reference covering the
+  visual-aesthetic layer — elevation/depth, effects (WHEN glass/noise/texture/blur read well), the
+  type ladder, imagery, custom shapes (vector/boolean), and radius/blend — as production "when/how,"
+  with a handoff Gate 9 ("not flat") forcing function.
+- **Skill-gate PreToolUse hook.** New `hooks/pre-tool.py` denies every figma-mcp-express MCP tool
+  call until the bundled `figma-mcp-express` skill is loaded in the session (it writes a per-session
+  marker, then allows the calls), and flags nested per-op `presence` params in batch ops. Shipped for
+  both Claude Code and Codex plugin installs (manifest `hooks` field + a matcher covering dev/variant
+  server names), with a `hooks/test_pre_tool.py` suite.
+
+### Changed
+
+- **`batch` contract compatibility for generated plans.** `batch` now accepts `op` as a
+  compatibility alias for `type`, hoists a singular `params.nodeId` into the op-level `nodeIds`
+  target list for target-style ops (scope-style `nodeId` params are left untouched), and returns a
+  pointed error when a caller tries to run the top-level-only `save_screenshots` as a batch op.
+- **`search_batch_ops` categories are now intent-based** (effects, layout, tokens, vector,
+  components, prototype, media, styles, handoff + content, arrange, read) instead of name-prefix
+  buckets, so browsing a category returns a coherent capability set. `batchOpCategory` reads the new
+  `batchOpIntent` SSOT.
+- **Effects design-judgment now has a single home.** Closed the circular deferral between
+  `figma-design-patterns` and `figma-mcp-express/references/effects.md`: `visual-craft.md` owns
+  WHEN/WHY, `effects.md` owns HOW (types/fields/call shape).
+- **Orchestrator-first `origin` default.** The presence roster now lists `wolfgang` (the
+  orchestrator) first, so a schema-following agent that picks the first enum value when no worker
+  origin is assigned defaults to the orchestrator identity instead of the first worker (`grace`).
+- **`set_auto_layout` rejects child-layout params.** `layoutSizingHorizontal` / `layoutSizingVertical`,
+  `layoutGrow`, `layoutAlign`, and `layoutPositioning` are child properties — passing them to
+  `set_auto_layout` now returns a pointed error directing to `resize_nodes` / `create_frame`.
+- **Bundled skills reworked for token efficiency + SSOT routing.** The `figma-mcp-express`,
+  `figma-design-patterns`, `figma-prototype`, and `figma-design-md` references were substantially
+  restructured — batch-recipes and multi-agent consolidated, op-specific schemas routed to the live
+  catalog (`search_batch_ops` / `get_batch_op_spec`) instead of mirrored — plus new craft rules
+  (scroll-ready mobile build, tidy component page, redundant-element) and sharpened layer naming.
 ## [2.6.0] — 2026-06-20
 
 ### Added

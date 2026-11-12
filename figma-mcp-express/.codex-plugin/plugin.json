@@ -1,11 +1,18 @@
 {
   "name": "figma-mcp-express",
-  "displayName": "Figma MCP Express",
-  "version": "2.6.0",
+  "version": "2.8.1",
   "description": "Compact Figma MCP with validated batch ops, multi-channel routing, library automation, and design skills.",
   "author": { "name": "sunhome243" },
   "license": "MIT",
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Figma MCP Express",
+    "shortDescription": "Figma MCP with batch ops, multi-channel routing, and design skills.",
+    "longDescription": "Figma MCP Express lets coding agents inspect and edit live Figma Desktop files through compact MCP tools, validated batch operations, multi-channel routing, lifecycle hooks, and bundled design skills.",
+    "defaultPrompt": "Use Figma MCP Express to inspect the connected Figma file, summarize the current page, and propose the next safe design automation step.",
+    "developerName": "sunhome243",
+    "category": "Design",
+    "capabilities": ["Read", "Write"]
+  }
 }

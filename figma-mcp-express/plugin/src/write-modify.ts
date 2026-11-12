@@ -125,8 +125,8 @@ export const handleWriteModifyRequest = async (request: any) => {
       const p = request.params || {};
       // Advanced paints: a direct paints[] (gradient / image / mixed solids) applied verbatim,
       // bypassing the single-solid shorthand. For a reusable stroke prefer create_paint_style +
-      // apply_style_to_node(target:"stroke"); this is the one-off direct path. strokeWeight is
-      // still honored alongside.
+      // apply_style_to_node(target:"stroke"); this is the one-off direct path. Stroke
+      // geometry (weight/align/dash/cap/join/per-side) is still honored alongside.
       if (Array.isArray(p.paints)) {
         return bulkApply(request, (node) => {
           if (!("strokes" in node)) throw new Error(`Node ${node.id} does not support strokes`);
@@ -354,7 +354,9 @@ export const handleWriteModifyRequest = async (request: any) => {
       if (!nodeId) throw new Error("nodeId is required");
       const node = await figma.getNodeByIdAsync(nodeId);
       if (!node) throw new Error(`Node not found: ${nodeId}`);
-      if (node.type !== "FRAME") throw new Error(`Node ${nodeId} is not a FRAME`);
+      if (!["FRAME", "COMPONENT", "COMPONENT_SET"].includes(node.type)) {
+        throw new Error(`Node ${nodeId} is not a FRAME, COMPONENT, or COMPONENT_SET`);
+      }
       await applyAutoLayout(node, p);
       figma.commitUndo();
       return {

@@ -18,7 +18,7 @@
     {
       "name": "figma-automation",
       "source": "./figma-automation/plugin",
-      "description": "Figma design automation: redesign, PRD-to-product pipeline, visual research, and progressive memory.",
+      "description": "Figma design automation: redesign, PRD-to-product pipeline, component-set/variant authoring, visual research, and progressive memory.",
       "category": "design"
     },
     {

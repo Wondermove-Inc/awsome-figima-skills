@@ -75,6 +75,7 @@ Claude Code plugin skills are namespaced by plugin. Example invocations:
 ```text
 /figma-automation:figma-redesign redesign this frame into our target library
 /figma-automation:figma-product turn this PRD into a high-fidelity Figma product
+/figma-automation:figma-variants audit the Button component set
 /qa-automation:design-qa compare this route against the mapped Figma screen
 ```
 
@@ -92,7 +93,24 @@ Recommended entry points:
 - [Figma product pipeline](../figma-automation/plugin/skills/figma-product/SKILL.md)
 - [Figma playbook memory](../figma-automation/plugin/skills/figma-playbook/SKILL.md)
 - [Figma visual researcher](../figma-automation/plugin/skills/figma-visual-researcher/SKILL.md)
+- [Figma variants](../figma-automation/plugin/skills/figma-variants/SKILL.md)
 - [Design QA](../qa-automation/plugin/skills/design-qa/SKILL.md)
+
+## Official Figma Skills
+
+Variant authoring (combining components into a set, component properties,
+slots), FigJam, Slides, Specs, and code layers need Figma's official MCP server
+and its bundled skills. Claude Code users install `figma@claude-plugins-official`;
+Cursor users run `/add-plugin figma`; other agents can fetch the skill folders
+locally:
+
+```bash
+./scripts/sync-figma-official-skills.sh            # into vendor/figma-official-skills/ (git-ignored)
+./scripts/sync-figma-official-skills.sh ~/.codex/skills/figma-official
+```
+
+See [Official Figma skills](figma-official-skills.md) for the catalog and
+plan/seat requirements.
 
 ## Optional Figma Token
 

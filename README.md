@@ -89,6 +89,7 @@ you need:
 - [Figma product pipeline](figma-automation/plugin/skills/figma-product/SKILL.md)
 - [Figma playbook memory](figma-automation/plugin/skills/figma-playbook/SKILL.md)
 - [Figma visual researcher](figma-automation/plugin/skills/figma-visual-researcher/SKILL.md)
+- [Figma variants](figma-automation/plugin/skills/figma-variants/SKILL.md)
 - [Design QA](qa-automation/plugin/skills/design-qa/SKILL.md)
 
 ## Core Workflows
@@ -99,6 +100,7 @@ you need:
 | `figma-product`           | Turn a PRD into a high-fidelity Figma product.           | PRD parsing, direction, foundation, spec, canon screen, gated build fan-out.             |
 | `figma-playbook`          | Load, apply, reflect, and consolidate design memory.     | Library/project/global memory stores with proposal-based writes.                         |
 | `figma-visual-researcher` | Fetch current UI references and assets.                  | Structured request validation, source-year constraints, ranked candidates.               |
+| `figma-variants`          | Author, audit, extend, and migrate component sets.       | Backend matrix (official `use_figma` vs figma-mcp-express), matrix planning, audit ledger. |
 | `design-qa`               | Compare a live app route against Figma.                  | Screen mapping, Playwright snapshots, bounded Figma reads, structured reports.           |
 
 Codex example prompts:
@@ -106,6 +108,7 @@ Codex example prompts:
 ```text
 $figma-redesign redesign this frame into our target library
 $figma-product turn this PRD into a high-fidelity Figma product
+$figma-variants add a Loading state to the Button component set
 $design-qa compare this route against the mapped Figma screen
 ```
 
@@ -114,8 +117,28 @@ Claude Code plugin skills are namespaced by plugin:
 ```text
 /figma-automation:figma-redesign redesign this frame into our target library
 /figma-automation:figma-product turn this PRD into a high-fidelity Figma product
+/figma-automation:figma-variants add a Loading state to the Button component set
 /qa-automation:design-qa compare this route against the mapped Figma screen
 ```
+
+## Official Figma Skills And Variant Authoring
+
+Figma's official MCP server ships 16 bundled skills plus 2 workflow skills
+(`figma-use`, `figma-generate-library`, `figma-generate-design`, FigJam,
+Slides, Specs, Code Connect, and more). They run against the remote server
+`https://mcp.figma.com/mcp` and are published under the Figma Developer Terms,
+so this repository links to them instead of vendoring them:
+
+- Claude Code: `claude plugin install figma@claude-plugins-official`
+- Other agents: `./scripts/sync-figma-official-skills.sh` fetches them into
+  the git-ignored `vendor/figma-official-skills/` folder.
+
+Combining components into a variant set, adding component properties, and
+creating slots are only possible through the official `use_figma` tool;
+figma-mcp-express (through 2.8.1) can consume variants and manage them by
+name but cannot combine them. The `figma-variants` skill encodes that split.
+See [Official Figma skills](docs/figma-official-skills.md) and the
+[2026 landscape](docs/figma-mcp-landscape-2026.md).
 
 ## How It Works
 
@@ -184,6 +207,8 @@ Most live Desktop-plugin workflows do not need it.
 - [Installation](docs/installation.md)
 - [Repository layout](docs/repository-layout.md)
 - [Security](docs/security.md)
+- [Official Figma skills](docs/figma-official-skills.md)
+- [Figma MCP landscape 2026](docs/figma-mcp-landscape-2026.md)
 - [Figma MCP Express](https://github.com/sunhome243/figma-mcp-express#readme)
 - [Figma MCP tools](https://github.com/sunhome243/figma-mcp-express/blob/main/TOOLS.md)
 

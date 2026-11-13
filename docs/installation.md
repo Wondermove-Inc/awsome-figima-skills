@@ -22,10 +22,12 @@ appear in the prompt. The installer adds the marketplace, installs the plugins,
 and activates the reusable Codex subagents used by the skills.
 
 This repository exposes Codex plugins through `.agents/plugins/marketplace.json`.
-The plugin `source.path` values are relative to the repository root, which is
-the expected layout for Git-backed marketplaces. The default Codex install does
-not need a project-level `.mcp.json`; the `figma-mcp-express` plugin provides
-its MCP server config.
+`figma-automation` and `qa-automation` use `local` sources with paths relative
+to the repository root. `figma-mcp-express` lives in its own repository (tracked
+here as a git submodule), so its entry uses a Git source
+(`{ "source": "url", "url": "...", "ref": "main" }`) and installs without
+needing submodules. The default Codex install does not need a project-level
+`.mcp.json`; the `figma-mcp-express` plugin provides its MCP server config.
 
 ## Claude Code Plugins
 
@@ -49,8 +51,24 @@ claude plugin install figma-automation@awesome-figma-skills
 claude plugin install qa-automation@awesome-figma-skills
 ```
 
-Each plugin also keeps its own `.claude-plugin/plugin.json` so Claude Code can
-install the package after the marketplace resolves the source path.
+Each plugin keeps its own `.claude-plugin/plugin.json`. `figma-automation` and
+`qa-automation` use relative-path sources. `figma-mcp-express` uses a
+`{ "source": "github", "repo": "sunhome243/figma-mcp-express", "ref": "main" }`
+source, so it installs straight from its own repository and does not depend on
+the git submodule being fetched.
+
+## Updating The Engine Pin
+
+`figma-mcp-express/` is a git submodule. To move it to a newer upstream commit:
+
+```bash
+git submodule update --remote figma-mcp-express
+git add figma-mcp-express
+git commit -m "chore: bump figma-mcp-express"
+```
+
+The marketplace entries track upstream `main`; pin a release by setting `ref`
+to a tag or `sha` to a full commit hash in both marketplace files.
 
 Claude Code plugin skills are namespaced by plugin. Example invocations:
 

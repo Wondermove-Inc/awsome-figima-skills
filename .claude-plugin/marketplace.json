@@ -7,18 +7,25 @@
   "plugins": [
     {
       "name": "figma-mcp-express",
-      "source": "./figma-mcp-express",
-      "description": "Figma MCP with batch ops, multi-channel routing, library automation, and design skills."
+      "source": {
+        "source": "github",
+        "repo": "sunhome243/figma-mcp-express",
+        "ref": "main"
+      },
+      "description": "Figma MCP with batch ops, multi-channel routing, library automation, and design skills.",
+      "category": "design"
     },
     {
       "name": "figma-automation",
       "source": "./figma-automation/plugin",
-      "description": "Figma design automation: redesign, PRD-to-product pipeline, visual research, and progressive memory."
+      "description": "Figma design automation: redesign, PRD-to-product pipeline, visual research, and progressive memory.",
+      "category": "design"
     },
     {
       "name": "qa-automation",
       "source": "./qa-automation/plugin",
-      "description": "Design-QA implementation-fidelity review for comparing a live rendered app against Figma."
+      "description": "Design-QA implementation-fidelity review for comparing a live rendered app against Figma.",
+      "category": "testing"
     }
   ]
 }

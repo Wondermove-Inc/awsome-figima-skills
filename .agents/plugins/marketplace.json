@@ -7,8 +7,9 @@
     {
       "name": "figma-mcp-express",
       "source": {
-        "source": "local",
-        "path": "./figma-mcp-express"
+        "source": "url",
+        "url": "https://github.com/sunhome243/figma-mcp-express.git",
+        "ref": "main"
       },
       "policy": {
         "installation": "AVAILABLE",

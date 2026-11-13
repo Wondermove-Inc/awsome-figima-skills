@@ -1,9 +1,11 @@
 # Repository Layout
 
-This is a flat public repository.
+This is a flat public repository. `figma-mcp-express/` is a git submodule of
+<https://github.com/sunhome243/figma-mcp-express>; run
+`git submodule update --init` after a plain clone.
 
 ```text
-figma-mcp-express/
+figma-mcp-express/     (submodule)
   cmd/ internal/        Go MCP server
   plugin/              Figma Desktop plugin source
   npm/                 npm package wrapper

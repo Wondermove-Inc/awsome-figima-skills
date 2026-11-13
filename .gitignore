@@ -20,12 +20,9 @@ node_modules/
 **/node_modules/
 dist/
 **/dist/
-figma-mcp-express/plugin/dist/
-figma-mcp-express/npm/node_modules/
 
 # Go builds and coverage
 /bin/
-figma-mcp-express/bin/
 *.test
 coverage.out
 coverage.html

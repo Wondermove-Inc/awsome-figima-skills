@@ -158,14 +158,16 @@ The workflows are intentionally gated:
 .
 ├── .agents/plugins/          # Codex marketplace entry
 ├── .claude-plugin/           # Claude Code marketplace entry
-├── figma-mcp-express/        # MCP server, Figma Desktop plugin, MCP docs
+├── figma-mcp-express/        # submodule: MCP server, Figma Desktop plugin, MCP docs
 ├── figma-automation/plugin/  # Figma product-design skills and agent prompts
 ├── qa-automation/plugin/     # Design-QA skill, reviewer prompt, snapshot scripts
 └── docs/                     # Installation, layout, and security notes
 ```
 
 This is a flat source distribution. The `figma-automation` and `qa-automation`
-folders stay flat; `figma-mcp-express` remains its own open-source package.
+folders stay flat; `figma-mcp-express` is a git submodule pointing at its own
+open-source repository. Clone with `git clone --recurse-submodules`, or run
+`git submodule update --init` after cloning.
 
 ## Security And Local Data
 
